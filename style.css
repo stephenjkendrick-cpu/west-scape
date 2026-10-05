@@ -1497,3 +1497,30 @@ body.ws-dragging #game-root #tab-inventory.active .inv-slot {
 #game-root #side-panel #tab-buttons, #game-root #side-panel #tab-buttons-bottom,
 #game-root #side-panel.collapsed #tab-buttons, #game-root #side-panel.collapsed #tab-buttons-bottom { height: auto !important; min-height: 0 !important; max-height: none !important; flex-shrink: 0 !important; }
 #game-root #side-panel .tab-btn { height: 26px !important; min-height: 26px !important; }
+
+/* Landscape-only: portrait shows a rotate prompt (iOS can't force rotation) */
+#rotate-overlay { display: none; }
+@media (orientation: portrait) {
+  html:not(.allow-portrait) #rotate-overlay {
+    display: flex; position: fixed; inset: 0; z-index: 100000; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+    background: radial-gradient(circle at 50% 45%, #5a3d1e, #1a1008 75%); color: #ffd700; text-align: center; padding: 24px;
+    font-family: Georgia, serif; touch-action: none;
+  }
+  html:not(.allow-portrait) #rotate-overlay .rot-phone { font-size: 64px; animation: rotPhone 2.2s ease-in-out infinite; }
+  html:not(.allow-portrait) #rotate-overlay .rot-title { font-size: 24px; font-weight: bold; text-shadow: 2px 2px 0 #000; }
+  html:not(.allow-portrait) #rotate-overlay .rot-sub { font-size: 14px; color: #e8d8b0; line-height: 1.5; max-width: 300px; }
+}
+@keyframes rotPhone { 0%, 20% { transform: rotate(0deg); } 50%, 80% { transform: rotate(-90deg); } 100% { transform: rotate(0deg); } }
+
+/* Creator badge / nameplate / toast */
+.nameplate.creator { color: #ffd700; text-shadow: 0 0 4px #000, 1px 1px 0 #000; font-weight: bold; text-align: center; }
+.nameplate.creator .creator-star { font-size: 12px; }
+.nameplate.creator .creator-sub { display: block; font-size: 9px; color: #ffe680; letter-spacing: 0.5px; margin-top: 1px; }
+.chat-line.creator-chat .chat-name { color: #ffd700 !important; }
+.creator-toast {
+  position: fixed; top: 18%; left: 50%; transform: translateX(-50%);
+  background: rgba(40, 30, 10, 0.92); color: #ffd700; border: 2px solid #c9a86c;
+  padding: 10px 16px; border-radius: 8px; z-index: 10000; font: bold 14px Verdana, sans-serif;
+  pointer-events: none; box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+}
+.creator-badge { color: #ffd700; }

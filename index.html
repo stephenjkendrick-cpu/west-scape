@@ -10,10 +10,11 @@
   <link rel="apple-touch-icon" href="icon-180.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <title>West-Scape</title>
-  <link rel="stylesheet" href="style.css?v=1791218558" />
-  
-</head>
+  <link rel="stylesheet" href="style.css?v=1791221009" />
+  </head>
 <body>
+  <div id="rotate-overlay"><div class="rot-phone">📱</div><div class="rot-title">Turn your phone sideways</div><div class="rot-sub">West-Scape plays in landscape, like OSRS Mobile.<br>If it doesn't turn, switch off Portrait Orientation Lock in Control Center.</div></div>
+  <script>if (navigator.webdriver || /[?&]portrait=1/.test(location.search)) document.documentElement.classList.add('allow-portrait');</script>
   <div id="game-root">
     <canvas id="game-canvas"></canvas>
 
@@ -112,6 +113,6 @@
     <!-- Loading -->
     <div id="loading">Loading West-Scape…</div>
   </div>
-  <script type="module" src="game.js?v=1791218558"></script>
+  <script type="module" src="game.js?v=1791221009"></script>
 </body>
 </html>
