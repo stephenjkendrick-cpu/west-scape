@@ -48,10 +48,15 @@
       </div>
     </div>
 
-    <!-- Chatbox -->
+    <!-- Chatbox (OSRS: dialogue replies live here, not a centered modal) -->
     <div id="chatbox">
       <button id="chat-toggle" title="Toggle chat">▾</button>
       <div id="chat-messages"></div>
+      <div id="dialogue" hidden>
+        <div id="dialogue-name"></div>
+        <div id="dialogue-text"></div>
+        <div id="dialogue-options"></div>
+      </div>
       <div id="chat-input-row">
         <span id="chat-prompt">Press Enter to chat</span>
         <input id="chat-input" type="text" maxlength="80" autocomplete="off" />
@@ -60,13 +65,6 @@
 
     <!-- Context menu -->
     <div id="context-menu" hidden></div>
-
-    <!-- Dialogue modal -->
-    <div id="dialogue" hidden>
-      <div id="dialogue-name"></div>
-      <div id="dialogue-text"></div>
-      <div id="dialogue-options"></div>
-    </div>
 
     <!-- Shop / Bank modal -->
     <div id="trade-modal" hidden>

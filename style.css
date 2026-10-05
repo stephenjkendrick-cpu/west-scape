@@ -535,3 +535,109 @@ html, body {
   #inv-grid { grid-auto-rows: 33px !important; }
   #tab-inventory .inv-slot { height: 33px !important; }
 }
+
+/* ==== Round: always-open OSRS bottom-right panel + chatbox dialogue (all sizes) ==== */
+#game-root #side-panel {
+  position: absolute !important;
+  top: auto !important;
+  right: 4px !important;
+  bottom: calc(4px + env(safe-area-inset-bottom, 0px)) !important;
+  left: auto !important;
+  width: clamp(150px, 40vw, 168px) !important;
+  max-height: min(420px, calc(100vh - 160px));
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 2px !important;
+  z-index: 20;
+  pointer-events: auto;
+}
+#game-root #side-panel.collapsed { /* collapse disabled — keep panel open */
+  width: clamp(150px, 40vw, 168px) !important;
+  background: linear-gradient(#4b4237, #3a332a) !important;
+  border-color: #1e1810 !important;
+  box-shadow: inset 0 0 0 1px #6a5d4a, 0 0 8px rgba(0,0,0,0.6) !important;
+}
+#game-root #side-panel.collapsed #tab-content { display: block !important; }
+#game-root #side-panel .tab-btn { width: 22px !important; height: 24px !important; font-size: 12px !important; line-height: 22px !important; }
+#game-root #side-panel #tab-content {
+  min-height: 0 !important;
+  max-height: min(280px, calc(100vh - 220px)) !important;
+  padding: 3px !important;
+  font-size: 11px;
+}
+#game-root #inv-grid { gap: 2px !important; }
+#game-root .inv-slot { font-size: 14px; }
+#game-root .inv-slot .icon { font-size: 14px !important; }
+#game-root .inv-slot .qty { font-size: 8px; }
+#game-root #coins-display { margin-top: 3px; font-size: 11px; }
+#game-root .paperdoll { grid-template-columns: repeat(3, 34px); grid-auto-rows: 34px; gap: 2px; }
+#game-root .pd-cell { font-size: 16px; }
+#game-root .skill-row { font-size: 10px; padding: 1px 0; }
+#game-root .tab-title { font-size: 11px; margin-bottom: 2px; }
+#game-root .set-row, #game-root .set-slider, #game-root .set-h { font-size: 10px; }
+#game-root .prayer, #game-root .spell, #game-root .emote { padding: 2px 1px; font-size: 9px; }
+#game-root .p-icon { font-size: 14px; }
+
+/* Chat sits bottom-left beside the panel (never under it) */
+#game-root #chatbox {
+  left: 4px !important;
+  right: calc(clamp(150px, 40vw, 168px) + 8px) !important;
+  width: auto !important;
+  max-width: none !important;
+  bottom: calc(4px + env(safe-area-inset-bottom, 0px)) !important;
+  padding: 2px 4px !important;
+  border-width: 2px;
+  z-index: 21;
+}
+#game-root #chat-messages { height: 56px; font-size: 11px; padding: 2px 22px 2px 2px; }
+#game-root.chat-min #chat-messages { height: 16px; }
+
+/* Dialogue is INSIDE the chatbox — not a centered modal */
+#game-root #chatbox #dialogue {
+  position: static !important;
+  transform: none !important;
+  left: auto !important;
+  bottom: auto !important;
+  width: 100% !important;
+  max-width: none !important;
+  max-height: 150px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 4px 2px !important;
+  background: rgba(20, 14, 6, 0.55) !important;
+  border: none !important;
+  border-top: 1px solid #5a3a1a !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  z-index: auto;
+}
+#game-root #chatbox #dialogue-name { font-size: 12px; margin-bottom: 2px; }
+#game-root #chatbox #dialogue-text { font-size: 11px; margin-bottom: 4px; line-height: 1.3; }
+#game-root #chatbox #dialogue-options { gap: 2px; }
+#game-root #chatbox #dialogue-options button {
+  padding: 5px 8px !important; font-size: 11px !important;
+}
+
+/* Hover / toast clear of panel */
+@media (max-width: 600px) {
+  #game-root #hover-text { bottom: calc(78px + env(safe-area-inset-bottom)); max-width: 52%; }
+  #game-root.chat-min #hover-text { bottom: calc(40px + env(safe-area-inset-bottom)); }
+  #game-root #toast { bottom: calc(78px + env(safe-area-inset-bottom)) !important; top: auto !important; max-width: 48%; }
+  #game-root.chat-min #toast { bottom: calc(40px + env(safe-area-inset-bottom)) !important; }
+  #game-root #side-panel #tab-content { max-height: min(260px, calc(100vh - 200px)) !important; }
+  #game-root #chat-messages { height: 48px; }
+}
+@media (min-width: 601px) {
+  #game-root #side-panel { width: 190px !important; right: 8px !important; bottom: 8px !important; }
+  #game-root #side-panel.collapsed { width: 190px !important; }
+  #game-root #chatbox { right: 206px !important; left: 8px !important; bottom: 8px !important; width: auto !important; }
+  #game-root #chat-messages { height: 80px; font-size: 12px; }
+  #game-root #side-panel .tab-btn { width: 24px !important; height: 26px !important; font-size: 13px !important; line-height: 24px !important; }
+  #game-root #side-panel #tab-content { max-height: 320px !important; }
+}
+.chat-line.npc { color: #e8c070; }
+.guide-row.cur { color: #ffd700; border-left: 2px solid #ffd700; padding-left: 4px; }
+
+/* Fit all 7 top tabs inside the panel width (no clipping) */
+#game-root #side-panel .tab-row { width: 100%; box-sizing: border-box; }
+#game-root #side-panel .tab-row-1 .tab-btn { flex: 1 1 0 !important; width: auto !important; min-width: 0 !important; overflow: hidden; }
