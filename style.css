@@ -1244,3 +1244,256 @@ html, body { touch-action: pan-x pan-y; overflow: hidden; overscroll-behavior: n
     left: calc(max(4px, env(safe-area-inset-left)) + 36px) !important;
   }
 }
+
+/* ============================================================
+   Portrait = landscape OSRS panel (vertical tab columns right)
+   + inventory-only click-through for empty slots
+   ============================================================ */
+
+/* Kill old portrait / mobile boxed-grid overrides */
+@media (max-width: 600px) {
+  #tab-inventory .inv-slot {
+    border: none !important;
+    border-width: 0 !important;
+    aspect-ratio: auto !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Semi-transparent stone panel (world shows through) — both orientations */
+#game-root #side-panel {
+  background: linear-gradient(180deg, rgba(75, 66, 55, 0.42), rgba(46, 40, 30, 0.38)) !important;
+  border: 2px solid rgba(30, 24, 16, 0.85) !important;
+  box-shadow: inset 0 0 0 1px rgba(106, 93, 74, 0.55), 0 0 10px rgba(0,0,0,0.45) !important;
+  pointer-events: auto !important; /* panel itself interactive except empty inv slots below */
+}
+#game-root #side-panel #tab-content {
+  background: rgba(62, 53, 41, 0.40) !important;
+  border: 1px solid rgba(30, 24, 16, 0.8) !important;
+}
+
+/* Inventory-ONLY click-through: empty slots pass taps to the world */
+#game-root #tab-inventory #inv-grid { pointer-events: none; }
+#game-root #tab-inventory .inv-slot.has-item,
+#game-root #tab-inventory .inv-slot.selected {
+  pointer-events: auto !important;
+}
+/* During drag, empty slots must accept drop targets */
+body.ws-dragging #game-root #tab-inventory #inv-grid,
+body.ws-dragging #game-root #tab-inventory .inv-slot {
+  pointer-events: auto !important;
+}
+/* Coins row stays tappable (info only) */
+#game-root #tab-inventory #coins-display { pointer-events: auto; }
+
+/* Other tabs: fully interactive (explicit) */
+#game-root #tab-content > .tab-pane:not(#tab-inventory) {
+  pointer-events: auto !important;
+}
+#game-root #tab-content > .tab-pane:not(#tab-inventory) * {
+  /* inherit — do not neutralize */
+}
+
+/* Chat stays fully interactive (not click-through) */
+#game-root #chatbox {
+  background: rgba(30, 24, 16, 0.72) !important;
+  pointer-events: auto !important;
+}
+#game-root #chat-messages,
+#game-root #chat-filters,
+#game-root #chat-input-row,
+#game-root #chatbox #dialogue {
+  pointer-events: auto !important;
+}
+
+/* ---- Portrait: same vertical tab columns as landscape ---- */
+@media (orientation: portrait) {
+  #game-root #side-panel {
+    top: auto !important;
+    right: max(4px, env(safe-area-inset-right)) !important;
+    bottom: max(4px, env(safe-area-inset-bottom)) !important;
+    left: auto !important;
+    width: auto !important;
+    max-width: min(58vw, 220px) !important;
+    max-height: min(48vh, calc(100dvh - 200px)) !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
+    gap: 2px !important;
+    padding: 3px !important;
+    z-index: 24 !important;
+  }
+  #game-root #side-panel #tab-content {
+    order: 1 !important;
+    width: clamp(120px, 38vw, 160px) !important;
+    min-width: 110px !important;
+    max-height: min(230px, 32vh) !important;
+    overflow-y: auto !important;
+    margin: 0 !important;
+  }
+  #game-root #side-panel .tab-row-1,
+  #game-root #side-panel .tab-row-2,
+  #game-root #side-panel #tab-buttons,
+  #game-root #side-panel #tab-buttons-bottom {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    gap: 2px !important;
+    width: 26px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+  #game-root #side-panel .tab-row-1,
+  #game-root #side-panel #tab-buttons { order: 2 !important; }
+  #game-root #side-panel .tab-row-2,
+  #game-root #side-panel #tab-buttons-bottom { order: 3 !important; }
+  #game-root #side-panel .tab-btn {
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 13px !important;
+    line-height: 24px !important;
+    border-radius: 3px !important;
+    pointer-events: auto !important;
+  }
+  #game-root #side-panel.collapsed {
+    width: auto !important;
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+  #game-root #side-panel.collapsed #tab-content { display: none !important; width: 0 !important; min-width: 0 !important; }
+
+  /* Borderless inv slots matching landscape */
+  #game-root #inv-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    grid-auto-rows: 26px !important;
+    gap: 1px !important;
+  }
+  #game-root #tab-inventory .inv-slot {
+    height: 26px !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  #game-root .inv-slot .icon { font-size: 12px !important; }
+  #game-root .inv-slot .qty { font-size: 8px !important; }
+
+  /* Chat bottom-left beside panel (not under it) */
+  #game-root #chatbox {
+    top: auto !important;
+    bottom: max(4px, env(safe-area-inset-bottom)) !important;
+    left: calc(max(4px, env(safe-area-inset-left)) + 36px) !important;
+    right: calc(min(58vw, 220px) + 10px) !important;
+    width: auto !important;
+  }
+}
+
+/* Chat click-through: history passes taps to world; chrome stays live */
+#game-root #chatbox {
+  background: rgba(30, 24, 16, 0.55) !important;
+  pointer-events: none !important; /* default: pass through empty chrome */
+}
+#game-root #chat-filters,
+#game-root #chat-filters *,
+#game-root #chat-input-row,
+#game-root #chat-input-row *,
+#game-root #chatbox #dialogue,
+#game-root #chatbox #dialogue *,
+#hud-left,
+#hud-left * {
+  pointer-events: auto !important;
+}
+/* Message history: taps go to the world (walk/interact) */
+#game-root #chat-messages {
+  pointer-events: none !important;
+}
+/* Tiny scroll hit-strip on the right edge of history so messages remain scrollable */
+#game-root #chat-messages::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 14px;
+  pointer-events: auto;
+}
+#game-root #chatbox { position: absolute; } /* ensure ::after anchors if needed */
+#chat-messages { position: relative; }
+/* While actively scrolling via the strip, allow the whole history to receive the gesture */
+#game-root #chatbox.chat-scrolling #chat-messages {
+  pointer-events: auto !important;
+}
+
+
+#chat-scroll-hit {
+  position: absolute;
+  right: 2px;
+  top: 22px;
+  bottom: 28px;
+  width: 16px;
+  padding: 0;
+  border: 1px solid #1e1810;
+  border-radius: 3px;
+  background: rgba(60, 48, 32, 0.85);
+  color: #c9a86c;
+  font-size: 10px;
+  line-height: 1;
+  cursor: ns-resize;
+  pointer-events: auto !important;
+  z-index: 3;
+  opacity: 0.7;
+}
+#chat-scroll-hit:active { opacity: 1; }
+#game-root.chat-min #chat-scroll-hit { display: none; }
+#game-root #chatbox { position: absolute !important; }
+
+/* Panel chrome: pass through by default; tabs + non-inv panes catch events */
+#game-root #side-panel { pointer-events: none !important; }
+#game-root #side-panel .tab-btn,
+#game-root #side-panel #tab-buttons,
+#game-root #side-panel #tab-buttons-bottom {
+  pointer-events: auto !important;
+}
+#game-root #tab-content { pointer-events: none !important; background: rgba(62, 53, 41, 0.40) !important; }
+#game-root #tab-content > .tab-pane.active:not(#tab-inventory) {
+  pointer-events: auto !important;
+}
+#game-root #tab-inventory.active {
+  pointer-events: none !important;
+}
+#game-root #tab-inventory.active .inv-slot.has-item,
+#game-root #tab-inventory.active .inv-slot.selected,
+#game-root #tab-inventory.active #coins-display {
+  pointer-events: auto !important;
+}
+body.ws-dragging #game-root #tab-inventory.active,
+body.ws-dragging #game-root #tab-inventory.active .inv-slot {
+  pointer-events: auto !important;
+}
+
+/* Portrait: chat goes full-width under the minimap/orbs (room for filter labels), clear of the panel */
+@media (orientation: portrait) {
+  #game-root #chatbox {
+    top: calc(max(4px, env(safe-area-inset-top)) + 168px) !important;
+    bottom: auto !important;
+    left: max(4px, env(safe-area-inset-left)) !important;
+    right: max(4px, env(safe-area-inset-right)) !important;
+    width: auto !important;
+    max-height: 132px !important;
+  }
+  #game-root .chat-filter { font-size: 10px !important; padding: 3px 2px !important; white-space: nowrap; }
+}
+@media (orientation: portrait) {
+  #game-root #chatbox { right: calc(max(4px, env(safe-area-inset-right)) + 46px) !important; }
+}
+/* Tab buttons never squash (e.g. when the panel is closed) */
+#game-root #side-panel .tab-btn { flex-shrink: 0 !important; }
+#game-root #side-panel .tab-row-1, #game-root #side-panel .tab-row-2 { flex-shrink: 0 !important; height: auto !important; align-self: flex-end; }
+#game-root #side-panel.collapsed { height: auto !important; max-height: none !important; }
+#game-root #side-panel #tab-buttons, #game-root #side-panel #tab-buttons-bottom,
+#game-root #side-panel.collapsed #tab-buttons, #game-root #side-panel.collapsed #tab-buttons-bottom { height: auto !important; min-height: 0 !important; max-height: none !important; flex-shrink: 0 !important; }
+#game-root #side-panel .tab-btn { height: 26px !important; min-height: 26px !important; }
