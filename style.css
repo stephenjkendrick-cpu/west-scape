@@ -641,3 +641,25 @@ html, body {
 /* Fit all 7 top tabs inside the panel width (no clipping) */
 #game-root #side-panel .tab-row { width: 100%; box-sizing: border-box; }
 #game-root #side-panel .tab-row-1 .tab-btn { flex: 1 1 0 !important; width: auto !important; min-width: 0 !important; overflow: hidden; }
+
+/* Zoom buttons under the minimap, left of the world-map button */
+#minimap-cluster .zoom-btn { position: absolute; top: 138px; width: 30px; height: 30px; z-index: 3; border-radius: 50%; border: 2px solid #5a3a1a;
+  background: radial-gradient(#4a3520, #2a1a0a); color: #ffd700; font: bold 18px/24px Georgia, serif; padding: 0; cursor: pointer; touch-action: manipulation; }
+#minimap-cluster #zoom-in-btn { right: 72px; }
+#minimap-cluster #zoom-out-btn { right: 36px; }
+@media (max-width: 600px) {
+  #minimap-cluster .zoom-btn { top: 106px; width: 28px; height: 28px; font-size: 16px; line-height: 22px; }
+  #minimap-cluster #zoom-in-btn { right: 64px; }
+  #minimap-cluster #zoom-out-btn { right: 32px; }
+}
+html, body { touch-action: none; -webkit-text-size-adjust: 100%; }
+@media (max-width: 600px) {
+  #minimap-cluster #zoom-in-btn { top: 140px; right: 0; }
+  #minimap-cluster #zoom-out-btn { top: 172px; right: 0; }
+}
+#minimap-cluster #zoom-in-btn { top: 172px; right: 0; }
+#minimap-cluster #zoom-out-btn { top: 206px; right: 0; }
+@media (max-width: 600px) {
+  #minimap-cluster #zoom-in-btn { top: 140px; right: 0; }
+  #minimap-cluster #zoom-out-btn { top: 172px; right: 0; }
+}
