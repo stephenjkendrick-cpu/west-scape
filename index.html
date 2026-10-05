@@ -10,7 +10,14 @@
   <link rel="apple-touch-icon" href="icon-180.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <title>West-Scape</title>
-  <link rel="stylesheet" href="style.css?v=1791227339" />
+  <link rel="stylesheet" href="style.css?v=1791238130" />
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+    }
+  }
+  </script>
 </head>
 <body>
   <div id="rotate-overlay"><div class="rot-phone" aria-hidden="true">▣</div><div class="rot-title">Turn your phone sideways</div><div class="rot-sub">West-Scape plays in landscape, like OSRS Mobile.<br>If it doesn't turn, switch off Portrait Orientation Lock in Control Center.</div></div>
@@ -90,12 +97,15 @@
 
     <!-- Shop / Bank modal -->
     <div id="trade-modal" hidden>
-      <div id="trade-title"></div>
+      <div id="trade-chrome">
+        <div id="trade-title"></div>
+        <button type="button" id="trade-close" title="Close" aria-label="Close">×</button>
+      </div>
       <div id="trade-body">
         <div id="trade-left"></div>
         <div id="trade-right"></div>
       </div>
-      <button id="trade-close">Close</button>
+      <div id="trade-footer"></div>
     </div>
 
     <!-- Hitsplats overlay (DOM positioned over canvas) -->
@@ -113,6 +123,6 @@
     <!-- Loading -->
     <div id="loading">Loading West-Scape…</div>
   </div>
-  <script type="module" src="game.js?v=1791227339"></script>
+  <script type="module" src="game.js?v=1791238130"></script>
 </body>
 </html>

@@ -203,19 +203,103 @@ html, body {
 }
 #dialogue-options button:hover { background: #5a3a1a; color: #ffd700; }
 
-/* Trade modal */
+/* Trade modal — OSRS shop / bank chrome */
 #trade-modal {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   z-index: 40; width: min(520px, 94%); max-height: 80%;
-  background: rgba(26,18,8,0.97); border: 3px solid #c9a86c;
-  border-radius: 6px; padding: 12px; display: flex; flex-direction: column;
+  background: linear-gradient(#5a4a32, #3e3424 40%, #2c2418);
+  border: 3px solid #8a7a5a;
+  box-shadow: inset 0 0 0 2px #2a2010, inset 0 0 0 4px #c9b07a, 0 4px 18px rgba(0,0,0,0.55);
+  border-radius: 4px; padding: 0; display: flex; flex-direction: column;
+  overflow: hidden;
 }
-#trade-title { color: #ffd700; font-weight: bold; font-size: 16px; margin-bottom: 8px; text-align: center; }
-#trade-body { display: flex; gap: 10px; flex: 1; overflow: hidden; min-height: 200px; }
+#trade-chrome {
+  display: flex; align-items: center; gap: 8px;
+  background: linear-gradient(#6a5538, #4a3a24);
+  border-bottom: 2px solid #1e1810;
+  padding: 4px 6px 4px 10px;
+  box-shadow: inset 0 1px 0 #8a7450;
+}
+#trade-title {
+  flex: 1; color: #ffcc00; font-weight: bold; font-size: 14px; text-align: center;
+  text-shadow: 1px 1px 0 #000; margin: 0; letter-spacing: 0.3px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+#trade-close {
+  flex: 0 0 auto; width: 26px; height: 26px; margin: 0; padding: 0;
+  background: linear-gradient(#8a3030, #5a1818); border: 2px solid #c9a86c;
+  color: #ffd700; font: bold 18px/22px Georgia, serif; cursor: pointer; border-radius: 3px;
+  box-shadow: inset 0 1px 0 #c06060;
+}
+#trade-close:active { filter: brightness(1.15); }
+#trade-body { display: flex; gap: 0; flex: 1; overflow: hidden; min-height: 0; padding: 6px; }
 #trade-left, #trade-right {
-  flex: 1; overflow-y: auto; background: #1a1208; border: 1px solid #5a3a1a;
-  border-radius: 3px; padding: 6px;
+  flex: 1; min-height: 0; overflow: hidden; background: #2a2218; border: 2px solid #1a140c;
+  border-radius: 2px; padding: 4px;
+  display: flex; flex-direction: column;
+  scrollbar-width: none; -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+  touch-action: pan-x pan-y;
 }
+/* Only the grid area may pan if a shop ever exceeds one page without paging */
+#trade-left .osrs-shop-grid, #trade-right .osrs-shop-grid { overflow: auto; scrollbar-width: none; -ms-overflow-style: none; }
+#trade-left .osrs-shop-grid::-webkit-scrollbar, #trade-right .osrs-shop-grid::-webkit-scrollbar { display: none; }
+#trade-left::-webkit-scrollbar, #trade-right::-webkit-scrollbar { display: none; width: 0; height: 0; }
+#trade-footer {
+  flex: 0 0 auto; padding: 4px 8px 6px; background: linear-gradient(#4a3a24, #3a2e1c);
+  border-top: 1px solid #1e1810; color: #e8d5a3; font-size: 11px;
+}
+.trade-coins { text-align: center; color: #ffff00; text-shadow: 1px 1px 0 #000; }
+.trade-coins b { color: #ffff00; }
+.bank-tools { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; justify-content: center; }
+.bank-tools input { width: 52px; background: #1a1208; border: 1px solid #5a3a1a; color: #e8d5a3; font-size: 11px; padding: 2px 4px; }
+.bank-tools input#bank-search { width: 88px; }
+.bank-tools .small-btn { background: #3d2914; border: 1px solid #c9a86c; color: #ffd700; font-size: 10px; padding: 2px 6px; cursor: pointer; border-radius: 2px; }
+.osrs-shop-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 8), minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  gap: 3px;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  flex: 1;
+  align-content: stretch;
+}
+#trade-left, #trade-right {
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.shop-slot {
+  position: relative;
+  background: linear-gradient(#4a3c2c, #322818);
+  border: 1px solid #1e160c; border-radius: 2px;
+  box-shadow: inset 0 1px 0 #6a5640;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; min-height: 0; min-width: 0;
+  touch-action: manipulation;
+}
+.shop-slot:hover, .shop-slot:active { filter: brightness(1.25); }
+.shop-slot.empty { pointer-events: none; opacity: 0.35; cursor: default; }
+.shop-slot .px-icon, .shop-slot img { width: 80%; height: 80%; object-fit: contain; image-rendering: pixelated; pointer-events: none; }
+.shop-slot .qty {
+  position: absolute; top: 1px; left: 2px; right: auto; bottom: auto;
+  font: bold 10px/1 Verdana, sans-serif;
+  text-shadow: 1px 1px 0 #000, -1px 0 #000, 0 -1px #000;
+  pointer-events: none; z-index: 1;
+}
+.shop-slot .qty-yellow { color: #ffff00; }
+.shop-slot .qty-white { color: #ffffff; }
+.shop-slot .qty-green { color: #00ff80; }
+.trade-pages {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  margin-top: 4px; color: #ffd700; font-size: 11px; text-shadow: 1px 1px 0 #000;
+}
+.trade-pages.muted { opacity: 0.85; }
+.trade-pages button {
+  background: #3d2914; border: 1px solid #c9a86c; color: #ffd700;
+  width: 28px; height: 22px; cursor: pointer; border-radius: 2px; font-size: 12px;
+}
+.trade-pages button:disabled { opacity: 0.35; cursor: default; }
 .trade-item {
   display: flex; justify-content: space-between; align-items: center;
   padding: 4px 6px; border-bottom: 1px solid #3d2914; cursor: pointer;
@@ -223,10 +307,6 @@ html, body {
 .trade-item:hover { background: #3d2914; }
 .trade-item .ti-name { color: #e8d5a3; }
 .trade-item .ti-price { color: #ffd700; font-size: 11px; }
-#trade-close {
-  margin-top: 8px; align-self: center; background: #5a3a1a; border: 1px solid #c9a86c;
-  color: #ffd700; padding: 6px 24px; cursor: pointer; border-radius: 3px;
-}
 
 /* Hitsplats */
 #hitsplats { position: absolute; inset: 0; pointer-events: none; z-index: 15; overflow: hidden; }
@@ -494,9 +574,17 @@ html, body {
 }
 /* orb arc spacing (no overlaps) */
 #minimap-cluster #hp-orb { top: 28px; left: 12px; }
-#minimap-cluster #faith-orb { top: 66px; left: 0; }
-#minimap-cluster #run-orb { top: 104px; left: 8px; }
-#minimap-cluster #spec-orb { top: 142px; left: 48px; }
+#minimap-cluster #faith-orb { top: 68px; left: 0; }
+#minimap-cluster #run-orb { top: 108px; left: 8px; }
+#minimap-cluster #spec-orb { top: 148px; left: 52px; }
+/* Desktop: keep compass and XP button from overlapping */
+@media (min-width: 601px) {
+  #minimap-cluster { height: 200px; }
+  #minimap-cluster #compass { left: 88px; top: 2px; width: 28px; height: 28px; }
+  #xp-btn { left: 8px; top: 2px; width: 28px; height: 28px; }
+  #minimap-cluster #run-orb { top: 112px; left: 4px; }
+  #minimap-cluster #spec-orb { top: 158px; left: 58px; }
+}
 @media (max-width: 600px) {
   #minimap-cluster #hp-orb { top: 22px; left: 6px; }
   #minimap-cluster #faith-orb { top: 54px; left: 0; }
@@ -510,7 +598,7 @@ html, body {
 .inv-slot, #inv-grid, .bank-slot, #trade-left .trade-item { touch-action: none; }
 /* toasts sit low (bottom-left above the action hint) so they never cover the boss bar */
 @media (max-width: 600px) { #toast { top: auto; bottom: calc(136px + env(safe-area-inset-bottom)); left: 6px; transform: none; max-width: 45%; } #game-root.chat-min #toast { bottom: calc(66px + env(safe-area-inset-bottom)); } }
-@media (max-width: 600px) { #boss-bar { left: 6px; transform: none; width: calc(100vw - 162px); top: calc(26px + env(safe-area-inset-top)); } }
+@media (max-width: 600px) { #boss-bar { left: 6px; transform: none; width: min(240px, calc(100vw - 170px)); max-width: 42vw; top: calc(26px + env(safe-area-inset-top)); } }
 
 /* ==== OSRS 'classic fixed' side panel: stone tab row above + below, content framed between (all screen sizes) ==== */
 #game-root #side-panel { display: flex; flex-direction: column; width: 226px; padding: 3px; box-sizing: border-box;
@@ -682,16 +770,43 @@ html, body { touch-action: pan-x pan-y; overflow: hidden; overscroll-behavior: n
   #minimap-cluster #zoom-out-btn { top: 172px; right: 0; }
 }
 
-/* Bank/shop open beside the inventory (OSRS-style) */
+/* Bank/shop open beside the inventory (OSRS-style) — no tiny scrollbars; grid sized to fit */
 #trade-modal.mode-bank #trade-left, #trade-modal.mode-shop #trade-right { display: none; }
-#game-root.trading #trade-modal { top: 56px; left: 10px; transform: none; width: min(460px, calc(100% - 300px)); max-height: calc(100% - 240px); }
+#trade-modal.mode-shop #trade-left, #trade-modal.mode-bank #trade-right { flex: 1; }
+/* Landscape (incl. 852×393): fill space left of inventory / above chat */
+#game-root.trading #trade-modal {
+  /* Explicit height — absolute+flex ignores bottom and grows with content otherwise */
+  top: 28px; left: 6px; right: 268px; bottom: auto;
+  height: calc(100vh - 128px);
+  max-height: calc(100vh - 128px);
+  transform: none; width: auto;
+  padding: 0; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+#game-root.trading #trade-body { min-height: 0; flex: 1; }
+#game-root.trading .osrs-shop-grid { gap: 2px; }
+#game-root.trading .shop-slot .qty { font-size: 9px; }
 @media (max-width: 600px) {
-  #game-root.trading #trade-modal { top: 212px; left: 4px; width: auto; right: 166px; bottom: 150px; max-height: none; padding: 6px; border-width: 2px; }
+  #game-root.trading #trade-modal {
+    /* Clear the ~218px side panel on portrait phones (393×852) */
+    top: 140px; left: 4px; right: 228px; bottom: auto;
+    height: calc(100vh - 140px - 230px);
+    max-height: calc(100vh - 370px);
+    border-width: 2px; overflow: hidden;
+  }
   #game-root.trading #trade-body { flex-direction: column; min-height: 0; }
-  #game-root.trading #trade-title { font-size: 13px; margin-bottom: 4px; }
+  #game-root.trading #trade-title { font-size: 12px; }
   #game-root.trading .bank-tools { font-size: 10px; gap: 3px; }
-  #game-root.trading .trade-item { padding: 3px 4px; font-size: 11px; }
-  #game-root.trading #trade-close { margin-top: 4px; padding: 4px 16px; }
+  #game-root.trading #trade-close { width: 24px; height: 24px; font-size: 16px; line-height: 20px; }
+  #game-root.trading .osrs-shop-grid { --cols: 6; grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+/* Hide scrollbars on other list UIs that used tiny bars */
+#tab-content, #chat-messages, .info-body, #skills-list, #quests-list {
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+#tab-content::-webkit-scrollbar, #chat-messages::-webkit-scrollbar,
+.info-body::-webkit-scrollbar, #skills-list::-webkit-scrollbar, #quests-list::-webkit-scrollbar {
+  display: none; width: 0; height: 0;
 }
 
 /* ---- OSRS-style dialogue: parchment panel, chat head, red name, blue "continue" ---- */
@@ -747,7 +862,7 @@ html, body { touch-action: pan-x pan-y; overflow: hidden; overscroll-behavior: n
 /* Let scrollable panels scroll by finger (page itself stays locked) */
 #game-root #side-panel #tab-content { overflow-y: auto !important; -webkit-overflow-scrolling: touch; touch-action: pan-y; overscroll-behavior: contain; }
 #tab-content > *, #chat-messages, #game-root #chatbox #dialogue, #trade-right, #trade-left, .info-body { touch-action: pan-y; }
-#chat-messages, #trade-right, #trade-left { overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+#chat-messages { overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; scrollbar-width: none; }
 
 
 /* ---- Character select / create ---- */
@@ -1043,7 +1158,8 @@ html, body { touch-action: pan-x pan-y; overflow: hidden; overscroll-behavior: n
 
 /* Ensure toast/boss don't cover minimap */
 #game-root #toast {
-  top: calc(var(--ui-pad-t) + 8px) !important;
+  /* Sit below the boss bar so they never share the same strip */
+  top: calc(var(--ui-pad-t) + 52px) !important;
   left: var(--ui-pad-l) !important;
   right: auto !important;
   bottom: auto !important;
@@ -1051,8 +1167,11 @@ html, body { touch-action: pan-x pan-y; overflow: hidden; overscroll-behavior: n
 }
 #game-root #boss-bar {
   top: calc(var(--ui-pad-t) + 4px) !important;
-  left: 50% !important; transform: translateX(-50%);
-  max-width: min(280px, 50vw);
+  left: max(8px, 10%) !important;
+  right: auto !important;
+  transform: none !important;
+  width: auto !important;
+  max-width: min(240px, 42vw) !important;
 }
 
 
@@ -1565,20 +1684,74 @@ body.ws-dragging #game-root #tab-inventory.active .inv-slot {
   #game-root #tab-equipment .tab-title { display: none; } /* save vertical space; tab label is enough */
 }
 
-/* Character create: full-body preview (head-to-boots + hat) */
-.char-preview-wrap { min-height: 120px; }
+/* Character create: full-body preview (head-to-boots + starter hat) */
+.char-preview-wrap { min-height: 100px; }
 #char-preview.fullbody {
   width: min(140px, 32vw);
   height: min(180px, 48vh);
   object-fit: contain;
   background: linear-gradient(#4a3a28, #2a1a10);
+  border: 2px solid #5a3a10;
+  border-radius: 8px;
 }
+.char-create-acts { flex-shrink: 0; }
 @media (orientation: landscape) and (max-height: 420px) {
-  #title-screen.char-mode { padding: 8px 10px 12px; gap: 6px; }
-  .char-create { display: grid; grid-template-columns: auto 1fr; gap: 8px 12px; align-items: start; width: min(640px, 96vw); }
-  .char-preview-wrap { grid-row: 1 / span 4; margin: 0; }
-  #char-preview.fullbody { width: 110px; height: min(160px, 70vh); }
-  .char-pickers { max-height: min(160px, 55vh); overflow-y: auto; }
+  #title-screen.char-mode {
+    padding: max(4px, env(safe-area-inset-top)) 8px max(6px, env(safe-area-inset-bottom));
+    gap: 4px;
+    justify-content: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  #title-screen.char-mode .title-logo { font-size: 20px; margin: 0; }
+  #title-screen.char-mode .title-sub { font-size: 11px; margin: 0; }
+  #title-screen.char-mode .title-note { font-size: 10px; margin: 2px 0 0; }
+  .char-create {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto 1fr auto auto;
+    gap: 4px 10px;
+    align-items: stretch;
+    width: min(620px, 96vw);
+    max-height: calc(100dvh - 56px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    max-height: calc(100vh - 56px);
+    padding: 8px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .char-preview-wrap {
+    grid-column: 1;
+    grid-row: 1 / span 5;
+    margin: 0;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #char-preview.fullbody {
+    width: min(100px, 22vw);
+    height: min(150px, calc(100dvh - 72px));
+    height: min(150px, calc(100vh - 72px));
+  }
+  .char-create > .char-field { grid-column: 2; grid-row: 1; margin: 0; }
+  .char-pickers {
+    grid-column: 2; grid-row: 2 / span 2;
+    max-height: none;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-right: 2px;
+  }
+  .char-create-acts {
+    grid-column: 2; grid-row: 4;
+    margin-top: 4px;
+    position: sticky;
+    bottom: 0;
+  }
+  .char-create > .char-err { grid-column: 2; grid-row: 5; min-height: 14px; font-size: 11px; }
+  .picker-row { margin: 2px 0; }
+  .picker-arr { width: 30px; height: 28px; }
+  .picker-lab { font-size: 11px; width: 42px; }
   .picker-txt { font-size: 11px; font-weight: 600; }
 }
 .standalone-hint { color: #e8c070; font-size: 12px; max-width: 360px; text-align: center; line-height: 1.35; margin: 4px 0; }
@@ -1592,27 +1765,120 @@ body.ws-dragging #game-root #tab-inventory.active .inv-slot {
 #import-char-box { margin-top: 8px; width: min(360px, 94vw); }
 #import-char-box textarea { width: 100%; min-height: 48px; font-size: 10px; box-sizing: border-box; }
 
-/* OSRS-style pixel icons (no emoji) */
+/* OSRS-style pixel icons (no emoji) — fill ~80% of slots, bold & saturated */
 .px-icon {
-  width: 1.35em; height: 1.35em;
+  width: 1.6em; height: 1.6em;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   vertical-align: middle;
   display: inline-block;
   object-fit: contain;
   pointer-events: none;
+  filter: contrast(1.08) saturate(1.15);
 }
-.inv-slot .px-icon, .pd-cell .px-icon, .trade-item .px-icon { width: 22px; height: 22px; }
-.sk-icon .px-icon, .px-skill { width: 18px; height: 18px; }
-.tab-btn-svg .px-icon, .tab-btn-svg .px-ui { width: 16px; height: 16px; }
+.inv-slot .px-icon, .pd-cell .px-icon, .trade-item .px-icon, .shop-slot .px-icon {
+  width: 80% !important; height: 80% !important;
+  max-width: none; max-height: none;
+}
+.sk-icon .px-icon, .px-skill { width: 22px; height: 22px; }
+.tab-btn-svg .px-icon, .tab-btn-svg .px-ui {
+  width: 22px !important; height: 22px !important;
+  max-width: 92%; max-height: 92%;
+}
 .xp-ico { width: 14px; height: 14px; }
-.p-icon .px-icon { width: 20px; height: 20px; }
+.p-icon .px-icon { width: 22px; height: 22px; }
 @media (orientation: landscape) and (max-height: 420px) {
-  .inv-slot .px-icon, .pd-cell .px-icon { width: 18px; height: 18px; }
-  .tab-btn-svg .px-icon { width: 14px; height: 14px; }
+  .inv-slot .px-icon, .pd-cell .px-icon, .shop-slot .px-icon {
+    width: 82% !important; height: 82% !important;
+    max-width: none; max-height: none;
+  }
+  .tab-btn-svg .px-icon, .tab-btn-svg .px-ui {
+    width: 20px !important; height: 20px !important;
+  }
 }
 
 .orb-ico .px-icon, .orb-ico .orb-px { width: 14px; height: 14px; }
 
 .hud-ico .hud-px-img, .hud-ico .px-icon { width: 18px; height: 18px; }
 #worldmap-btn .px-icon { width: 16px; height: 16px; }
+
+/* Polish: inventory slots & tabs sized for bold pixel icons */
+@media (orientation: landscape) and (max-height: 420px) {
+  #game-root #tab-inventory .inv-slot {
+    height: clamp(26px, 7vh, 34px) !important;
+  }
+  #game-root #side-panel .tab-btn {
+    width: 28px !important;
+    height: 28px !important;
+    line-height: 26px !important;
+  }
+  #game-root #side-panel .tab-btn .px-icon {
+    width: 22px !important;
+    height: 22px !important;
+  }
+}
+
+/* Equipment tab cowboy-hat icon — readable silhouette */
+.tab-btn .eq-hat, .tab-btn-svg .eq-hat {
+  width: 22px !important; height: 22px !important;
+  display: block; margin: 0 auto;
+  color: #c9a86c;
+  filter: drop-shadow(0 0 0 #1a1008);
+}
+.tab-btn.active .eq-hat { color: #ffd700; }
+.pd-cell .eq-hat { color: #6a5a48; opacity: 0.55; width: 70%; height: 70%; }
+
+/* ---- v4: item sprites fill ~80% of inventory/shop slots ---- */
+#game-root .inv-slot .px-icon,
+#game-root .pd-cell .px-icon,
+#game-root .shop-slot .px-icon,
+#game-root .shop-slot img.px-icon,
+#game-root .trade-item .px-icon {
+  width: 80% !important;
+  height: 80% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  image-rendering: pixelated !important;
+}
+#game-root .tab-btn .px-ui,
+#game-root .tab-btn .px-icon {
+  width: 22px !important;
+  height: 22px !important;
+  max-width: 92% !important;
+  max-height: 92% !important;
+}
+
+/* ==== SHIP: landscape orb gaps; cluster clears side-panel on 852×393 ==== */
+@media (orientation: landscape) {
+  #game-root #minimap-cluster {
+    width: 168px !important;
+    height: 168px !important; /* bottom must stay above side-panel (~top 185) */
+  }
+  #game-root #minimap-cluster #xp-btn {
+    top: 0 !important; left: 6px !important;
+    width: 24px !important; height: 24px !important;
+  }
+  #game-root #minimap-cluster #compass {
+    top: 0 !important; left: 86px !important;
+    width: 24px !important; height: 24px !important;
+  }
+  #game-root #minimap-cluster #hp-orb { top: 26px !important; left: 2px !important; width: 32px !important; height: 32px !important; }
+  #game-root #minimap-cluster #faith-orb { top: 58px !important; left: -2px !important; width: 30px !important; height: 30px !important; }
+  #game-root #minimap-cluster #run-orb { top: 90px !important; left: 4px !important; width: 30px !important; height: 30px !important; }
+  #game-root #minimap-cluster #spec-orb { top: 122px !important; left: 30px !important; width: 30px !important; height: 30px !important; }
+  #game-root #minimap-cluster #worldmap-btn {
+    top: auto !important; bottom: 2px !important; right: 2px !important;
+    width: 26px !important; height: 26px !important;
+  }
+}
+/* Desktop gets a taller cluster (panel is lower) */
+@media (orientation: landscape) and (min-width: 1000px) {
+  #game-root #minimap-cluster { width: 180px !important; height: 196px !important; }
+  #game-root #minimap-cluster #hp-orb { top: 30px !important; left: 4px !important; width: 34px !important; height: 34px !important; }
+  #game-root #minimap-cluster #faith-orb { top: 68px !important; left: 0 !important; width: 32px !important; height: 32px !important; }
+  #game-root #minimap-cluster #run-orb { top: 108px !important; left: 6px !important; width: 32px !important; height: 32px !important; }
+  #game-root #minimap-cluster #spec-orb { top: 148px !important; left: 36px !important; width: 32px !important; height: 32px !important; }
+  #game-root #minimap-cluster #xp-btn { left: 8px !important; width: 26px !important; height: 26px !important; }
+  #game-root #minimap-cluster #compass { left: 92px !important; width: 26px !important; height: 26px !important; }
+}
