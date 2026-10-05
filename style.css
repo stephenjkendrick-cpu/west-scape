@@ -663,3 +663,15 @@ html, body { touch-action: none; -webkit-text-size-adjust: 100%; }
   #minimap-cluster #zoom-in-btn { top: 140px; right: 0; }
   #minimap-cluster #zoom-out-btn { top: 172px; right: 0; }
 }
+
+/* Bank/shop open beside the inventory (OSRS-style) */
+#trade-modal.mode-bank #trade-left, #trade-modal.mode-shop #trade-right { display: none; }
+#game-root.trading #trade-modal { top: 56px; left: 10px; transform: none; width: min(460px, calc(100% - 300px)); max-height: calc(100% - 240px); }
+@media (max-width: 600px) {
+  #game-root.trading #trade-modal { top: 212px; left: 4px; width: auto; right: 166px; bottom: 150px; max-height: none; padding: 6px; border-width: 2px; }
+  #game-root.trading #trade-body { flex-direction: column; min-height: 0; }
+  #game-root.trading #trade-title { font-size: 13px; margin-bottom: 4px; }
+  #game-root.trading .bank-tools { font-size: 10px; gap: 3px; }
+  #game-root.trading .trade-item { padding: 3px 4px; font-size: 11px; }
+  #game-root.trading #trade-close { margin-top: 4px; padding: 4px 16px; }
+}
