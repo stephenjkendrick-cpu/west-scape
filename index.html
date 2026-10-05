@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>West-Scape</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="game-root">
+    <canvas id="game-canvas"></canvas>
+
+    <div id="hover-text"></div>
+    <div id="boss-bar" hidden><div id="boss-name"></div><div id="boss-hp"><div id="boss-fill"></div><span id="boss-num"></span></div></div>
+    <div id="toast"></div>
+    <div id="levelup-popup" hidden></div>
+    <div id="world-map" hidden><div id="wm-title">World Map <button id="wm-close" class="small-btn">Close</button></div><canvas id="wm-canvas" width="384" height="384"></canvas></div>
+
+    <!-- Minimap cluster (OSRS-style): orbs arc on the left, compass + XP button on top, world map bottom-right -->
+    <div id="minimap-cluster">
+      <div id="minimap-wrap"><canvas id="minimap" width="150" height="150"></canvas></div>
+      <div id="compass" title="Tap to face north">N</div>
+      <button id="xp-btn" title="Toggle XP counter">XP</button>
+      <div id="xp-counter" title="Total XP">XP: <span id="xp-total">0</span></div>
+      <div id="xp-drops"></div>
+      <div id="hp-orb" class="orb" title="Hitpoints"><div id="hp-fill"></div><span id="hp-text">10</span><span class="orb-ico">❤️</span></div>
+      <div id="faith-orb" class="orb" title="Faith (tap: quick-prayer)"><div class="orb-fill"></div><span class="orb-text">1</span><span class="orb-ico">✝️</span></div>
+      <div id="run-orb" class="orb" title="Run energy (tap: toggle run)"><div class="orb-fill"></div><span class="orb-text">100</span><span class="orb-ico">🏃</span></div>
+      <div id="spec-orb" class="orb" title="Special attack (tap to arm)"><div class="orb-fill"></div><span class="orb-text">100</span><span class="orb-ico">⚡</span></div>
+      <button id="worldmap-btn" title="World map">🗺️</button>
+    </div>
+
+    <!-- Side tabs -->
+    <div id="side-panel">
+      <div id="tab-buttons"><!-- built by js/tabs/index.js --></div>
+      <div id="tab-content">
+        <div id="tab-inventory" class="tab-pane active">
+          <div id="inv-grid"></div>
+          <div id="coins-display">Coins: <span id="coins-val">0</span></div>
+        </div>
+        <div id="tab-skills" class="tab-pane">
+          <div id="skills-list"></div>
+        </div>
+        <div id="tab-quests" class="tab-pane">
+          <div id="quests-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chatbox -->
+    <div id="chatbox">
+      <button id="chat-toggle" title="Toggle chat">▾</button>
+      <div id="chat-messages"></div>
+      <div id="chat-input-row">
+        <span id="chat-prompt">Press Enter to chat</span>
+        <input id="chat-input" type="text" maxlength="80" autocomplete="off" />
+      </div>
+    </div>
+
+    <!-- Context menu -->
+    <div id="context-menu" hidden></div>
+
+    <!-- Dialogue modal -->
+    <div id="dialogue" hidden>
+      <div id="dialogue-name"></div>
+      <div id="dialogue-text"></div>
+      <div id="dialogue-options"></div>
+    </div>
+
+    <!-- Shop / Bank modal -->
+    <div id="trade-modal" hidden>
+      <div id="trade-title"></div>
+      <div id="trade-body">
+        <div id="trade-left"></div>
+        <div id="trade-right"></div>
+      </div>
+      <button id="trade-close">Close</button>
+    </div>
+
+    <!-- Hitsplats overlay (DOM positioned over canvas) -->
+    <div id="hitsplats"></div>
+
+    <!-- Title screen (shown after logout) -->
+    <div id="title-screen" hidden>
+      <div class="title-logo">West-Scape</div>
+      <div class="title-sub">A frontier adventure</div>
+      <button id="title-play">Play</button>
+      <div class="title-note">Your progress is saved in this browser.</div>
+    </div>
+
+    <div id="fade"></div>
+
+    <!-- Loading -->
+    <div id="loading">Loading West-Scape…</div>
+  </div>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
