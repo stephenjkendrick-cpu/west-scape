@@ -986,6 +986,22 @@ html, body { touch-action: pan-x pan-y; overflow: hidden; overscroll-behavior: n
     max-width: 45% !important;
   }
   #game-root.chat-min #hover-text { bottom: calc(28px + var(--ui-pad-b)) !important; }
+  /* Equipment paperdoll: fit all 11 slots (5 rows) + bonuses in short landscape */
+  #game-root .paperdoll {
+    grid-template-columns: repeat(3, 28px) !important;
+    grid-auto-rows: 28px !important;
+    gap: 1px !important;
+    margin: 2px 0 4px !important;
+  }
+  #game-root .pd-cell { font-size: 13px !important; }
+  #game-root .pd-sil { width: 75%; height: 75%; }
+  #game-root #tab-equipment .tab-title { font-size: 10px !important; margin-bottom: 1px !important; }
+  #game-root #tab-equipment .bonus-table { font-size: 9px !important; gap: 0 4px !important; }
+  #game-root #tab-equipment .bonus-table .bt-h { margin-top: 1px !important; }
+  #game-root #side-panel:not(.collapsed) #tab-content {
+    max-height: calc(100dvh - var(--mm-size, 120px) - var(--ui-pad-t, 4px) - var(--ui-pad-b, 4px) - 72px) !important;
+    overflow-y: auto !important;
+  }
   /* Inventory: borderless, fit without scroll in landscape panel */
   #game-root #inv-grid { grid-auto-rows: clamp(22px, 5.5vh, 32px) !important; }
   #game-root #tab-inventory .inv-slot { height: clamp(22px, 5.5vh, 32px) !important; }
@@ -1535,3 +1551,68 @@ body.ws-dragging #game-root #tab-inventory.active .inv-slot {
   pointer-events: none; box-shadow: 0 4px 16px rgba(0,0,0,0.5);
 }
 .creator-badge { color: #ffd700; }
+
+/* Short landscape (iPhone landscape ~393px): extra-compact worn equipment */
+@media (orientation: landscape) and (max-height: 420px) {
+  #game-root .paperdoll {
+    grid-template-columns: repeat(3, 24px) !important;
+    grid-auto-rows: 24px !important;
+    gap: 1px !important;
+    margin: 1px 0 2px !important;
+  }
+  #game-root .pd-cell { font-size: 11px !important; border-radius: 2px; }
+  #game-root #tab-equipment .bonus-table { font-size: 8px !important; line-height: 1.15; }
+  #game-root #tab-equipment .tab-title { display: none; } /* save vertical space; tab label is enough */
+}
+
+/* Character create: full-body preview (head-to-boots + hat) */
+.char-preview-wrap { min-height: 120px; }
+#char-preview.fullbody {
+  width: min(140px, 32vw);
+  height: min(180px, 48vh);
+  object-fit: contain;
+  background: linear-gradient(#4a3a28, #2a1a10);
+}
+@media (orientation: landscape) and (max-height: 420px) {
+  #title-screen.char-mode { padding: 8px 10px 12px; gap: 6px; }
+  .char-create { display: grid; grid-template-columns: auto 1fr; gap: 8px 12px; align-items: start; width: min(640px, 96vw); }
+  .char-preview-wrap { grid-row: 1 / span 4; margin: 0; }
+  #char-preview.fullbody { width: 110px; height: min(160px, 70vh); }
+  .char-pickers { max-height: min(160px, 55vh); overflow-y: auto; }
+  .picker-txt { font-size: 11px; font-weight: 600; }
+}
+.standalone-hint { color: #e8c070; font-size: 12px; max-width: 360px; text-align: center; line-height: 1.35; margin: 4px 0; }
+.creator-key-box { background: #2a1a0a; border: 1px solid #5a3a1a; border-radius: 6px; padding: 6px; margin: 4px 0; }
+.creator-key-box input { width: 100%; box-sizing: border-box; font-size: 12px; padding: 6px; border-radius: 4px; border: 1px solid #5a3a1a; background: #1a1208; color: #f0e0c0; }
+.creator-key-status { font-size: 11px; margin-top: 4px; color: #c9a86c; }
+.creator-key-status.ok { color: #7dcea0; }
+.creator-key-status.err { color: #e74c3c; }
+.char-card-acts { display: flex; flex-wrap: wrap; gap: 4px; }
+.char-card-acts .title-btn { font-size: 11px; padding: 4px 8px; }
+#import-char-box { margin-top: 8px; width: min(360px, 94vw); }
+#import-char-box textarea { width: 100%; min-height: 48px; font-size: 10px; box-sizing: border-box; }
+
+/* OSRS-style pixel icons (no emoji) */
+.px-icon {
+  width: 1.35em; height: 1.35em;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  vertical-align: middle;
+  display: inline-block;
+  object-fit: contain;
+  pointer-events: none;
+}
+.inv-slot .px-icon, .pd-cell .px-icon, .trade-item .px-icon { width: 22px; height: 22px; }
+.sk-icon .px-icon, .px-skill { width: 18px; height: 18px; }
+.tab-btn-svg .px-icon, .tab-btn-svg .px-ui { width: 16px; height: 16px; }
+.xp-ico { width: 14px; height: 14px; }
+.p-icon .px-icon { width: 20px; height: 20px; }
+@media (orientation: landscape) and (max-height: 420px) {
+  .inv-slot .px-icon, .pd-cell .px-icon { width: 18px; height: 18px; }
+  .tab-btn-svg .px-icon { width: 14px; height: 14px; }
+}
+
+.orb-ico .px-icon, .orb-ico .orb-px { width: 14px; height: 14px; }
+
+.hud-ico .hud-px-img, .hud-ico .px-icon { width: 18px; height: 18px; }
+#worldmap-btn .px-icon { width: 16px; height: 16px; }

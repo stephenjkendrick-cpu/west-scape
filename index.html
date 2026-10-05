@@ -10,24 +10,17 @@
   <link rel="apple-touch-icon" href="icon-180.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <title>West-Scape</title>
-  <link rel="stylesheet" href="style.css?v=1791223606" />
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
-    }
-  }
-  </script>
+  <link rel="stylesheet" href="style.css?v=1791227339" />
 </head>
 <body>
-  <div id="rotate-overlay"><div class="rot-phone">📱</div><div class="rot-title">Turn your phone sideways</div><div class="rot-sub">West-Scape plays in landscape, like OSRS Mobile.<br>If it doesn't turn, switch off Portrait Orientation Lock in Control Center.</div></div>
+  <div id="rotate-overlay"><div class="rot-phone" aria-hidden="true">▣</div><div class="rot-title">Turn your phone sideways</div><div class="rot-sub">West-Scape plays in landscape, like OSRS Mobile.<br>If it doesn't turn, switch off Portrait Orientation Lock in Control Center.</div></div>
   <script>if (navigator.webdriver || /[?&]portrait=1/.test(location.search)) document.documentElement.classList.add('allow-portrait');</script>
   <div id="game-root">
     <canvas id="game-canvas"></canvas>
 
     <div id="hud-left">
-      <button type="button" id="hud-chat-toggle" class="hud-ico" title="Toggle chat">💬</button>
-      <button type="button" id="hud-logout" class="hud-ico" title="Logout">🚪</button>
+      <button type="button" id="hud-chat-toggle" class="hud-ico" title="Toggle chat" data-ui-ico="chat"><span class="hud-px"></span></button>
+      <button type="button" id="hud-logout" class="hud-ico" title="Logout" data-ui-ico="logout"><span class="hud-px"></span></button>
     </div>
     <div id="hover-text"></div>
     <div id="boss-bar" hidden><div id="boss-name"></div><div id="boss-hp"><div id="boss-fill"></div><span id="boss-num"></span></div></div>
@@ -42,13 +35,13 @@
       <button id="xp-btn" title="Toggle XP counter">XP</button>
       <div id="xp-counter" title="Total XP">XP: <span id="xp-total">0</span></div>
       <div id="xp-drops"></div>
-      <div id="hp-orb" class="orb" title="Hitpoints"><div id="hp-fill"></div><span id="hp-text">10</span><span class="orb-ico">❤️</span></div>
-      <div id="faith-orb" class="orb" title="Faith (tap: quick-prayer)"><div class="orb-fill"></div><span class="orb-text">1</span><span class="orb-ico">✝️</span></div>
-      <div id="run-orb" class="orb" title="Run energy (tap: toggle run)"><div class="orb-fill"></div><span class="orb-text">100</span><span class="orb-ico">🏃</span></div>
-      <div id="spec-orb" class="orb" title="Special attack (tap to arm)"><div class="orb-fill"></div><span class="orb-text">100</span><span class="orb-ico">⚡</span></div>
+      <div id="hp-orb" class="orb" title="Hitpoints"><div id="hp-fill"></div><span id="hp-text">10</span><span class="orb-ico" data-orb-ico="hp"></span></div>
+      <div id="faith-orb" class="orb" title="Faith (tap: quick-prayer)"><div class="orb-fill"></div><span class="orb-text">1</span><span class="orb-ico" data-orb-ico="prayorb"></span></div>
+      <div id="run-orb" class="orb" title="Run energy (tap: toggle run)"><div class="orb-fill"></div><span class="orb-text">100</span><span class="orb-ico" data-orb-ico="run"></span></div>
+      <div id="spec-orb" class="orb" title="Special attack (tap to arm)"><div class="orb-fill"></div><span class="orb-text">100</span><span class="orb-ico" data-orb-ico="spec"></span></div>
       <button id="zoom-in-btn" class="zoom-btn" title="Zoom in">+</button>
       <button id="zoom-out-btn" class="zoom-btn" title="Zoom out">−</button>
-      <button id="worldmap-btn" title="World map">🗺️</button>
+      <button id="worldmap-btn" title="World map" data-ui-ico="map"><span class="hud-px"></span></button>
       <div id="players-online" hidden>Players: 1</div>
     </div>
 
@@ -120,6 +113,6 @@
     <!-- Loading -->
     <div id="loading">Loading West-Scape…</div>
   </div>
-  <script type="module" src="game.js?v=1791223606"></script>
+  <script type="module" src="game.js?v=1791227339"></script>
 </body>
 </html>
