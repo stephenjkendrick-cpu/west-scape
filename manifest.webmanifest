@@ -1,0 +1,19 @@
+{
+  "name": "West-Scape",
+  "short_name": "West-Scape",
+  "description": "A frontier adventure — OSRS-style Wild West.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#1a1208",
+  "theme_color": "#3e3529",
+  "icons": [
+    {
+      "src": "icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

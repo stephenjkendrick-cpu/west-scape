@@ -1,3 +1,24 @@
+/* Full-bleed app shell (Safari A2HS + landscape URL bar) */
+html, body {
+  height: 100%;
+  height: 100dvh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #1a1208;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+#game-root {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  height: calc(var(--vvh, 1vh) * 100);
+  overflow: hidden;
+}
 [hidden] { display: none !important; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body {
@@ -524,16 +545,12 @@ html, body {
 }
 @media (max-width: 600px) {
   #game-root #side-panel:not(.collapsed) { width: 200px; }
-  #game-root #side-panel #tab-content { max-height: 270px !important; overflow-y: hidden !important; }
-  #inv-grid { gap: 1px !important; grid-auto-rows: 34px !important; }
-  #tab-inventory .inv-slot { height: 34px !important; aspect-ratio: auto !important; font-size: 12px !important; }
-  #tab-inventory .inv-slot .icon { font-size: 13px !important; line-height: 1; }
-}
-@media (max-width: 600px) {
-  #coins-display { margin-top: 2px; font-size: 11px; }
-  #game-root #side-panel #tab-content { max-height: 278px !important; }
-  #inv-grid { grid-auto-rows: 33px !important; }
-  #tab-inventory .inv-slot { height: 33px !important; }
+  #game-root #side-panel #tab-content { max-height: 230px !important; overflow-y: hidden !important; }
+  #inv-grid { gap: 1px !important; grid-auto-rows: 28px !important; }
+  #tab-inventory .inv-slot { height: 28px !important; aspect-ratio: auto !important; font-size: 11px !important; }
+  #tab-inventory .inv-slot .icon { font-size: 12px !important; line-height: 1; }
+  #tab-inventory .inv-slot .qty { font-size: 7px !important; }
+  #coins-display { margin-top: 1px; font-size: 10px; }
 }
 
 /* ==== Round: always-open OSRS bottom-right panel + chatbox dialogue (all sizes) ==== */
@@ -551,13 +568,7 @@ html, body {
   z-index: 20;
   pointer-events: auto;
 }
-#game-root #side-panel.collapsed { /* collapse disabled — keep panel open */
-  width: clamp(150px, 40vw, 168px) !important;
-  background: linear-gradient(#4b4237, #3a332a) !important;
-  border-color: #1e1810 !important;
-  box-shadow: inset 0 0 0 1px #6a5d4a, 0 0 8px rgba(0,0,0,0.6) !important;
-}
-#game-root #side-panel.collapsed #tab-content { display: block !important; }
+/* collapse re-enabled for OSRS mobile */
 #game-root #side-panel .tab-btn { width: 22px !important; height: 24px !important; font-size: 12px !important; line-height: 22px !important; }
 #game-root #side-panel #tab-content {
   min-height: 0 !important;
@@ -652,7 +663,7 @@ html, body {
   #minimap-cluster #zoom-in-btn { right: 64px; }
   #minimap-cluster #zoom-out-btn { right: 32px; }
 }
-html, body { touch-action: none; -webkit-text-size-adjust: 100%; }
+html, body { touch-action: pan-x pan-y; overflow: hidden; overscroll-behavior: none; -webkit-text-size-adjust: 100%; }
 @media (max-width: 600px) {
   #minimap-cluster #zoom-in-btn { top: 140px; right: 0; }
   #minimap-cluster #zoom-out-btn { top: 172px; right: 0; }
@@ -674,4 +685,562 @@ html, body { touch-action: none; -webkit-text-size-adjust: 100%; }
   #game-root.trading .bank-tools { font-size: 10px; gap: 3px; }
   #game-root.trading .trade-item { padding: 3px 4px; font-size: 11px; }
   #game-root.trading #trade-close { margin-top: 4px; padding: 4px 16px; }
+}
+
+/* ---- OSRS-style dialogue: parchment panel, chat head, red name, blue "continue" ---- */
+#game-root #chatbox #dialogue {
+  background: #c8b48a !important; border: 2px solid #5a3a1a !important; border-radius: 2px !important;
+  position: relative !important; padding: 4px 6px !important; min-height: 64px; box-sizing: border-box;
+  font-family: 'Trebuchet MS', Verdana, sans-serif;
+}
+#game-root #chatbox #dialogue-head {
+  position: absolute; left: 4px; top: 4px; width: 56px; height: 56px; object-fit: contain;
+  image-rendering: auto; pointer-events: none;
+}
+#game-root #chatbox #dialogue.player-speaks #dialogue-head { left: auto; right: 4px; transform: scaleX(-1); }
+#game-root #chatbox #dialogue.has-head #dialogue-name,
+#game-root #chatbox #dialogue.has-head #dialogue-text { margin-left: 62px; }
+#game-root #chatbox #dialogue.has-head.player-speaks #dialogue-name,
+#game-root #chatbox #dialogue.has-head.player-speaks #dialogue-text { margin-left: 0; margin-right: 62px; }
+#game-root #chatbox #dialogue-name { color: #800000 !important; text-align: center; font-size: 13px !important; text-shadow: none; }
+#game-root #chatbox #dialogue-text { color: #000 !important; text-align: center; font-size: 12px !important; text-shadow: none; }
+#game-root #chatbox #dialogue-options button {
+  background: transparent !important; border: none !important; color: #000 !important; text-align: center;
+  font-size: 12px !important; padding: 4px 6px !important; box-shadow: none !important;
+}
+#game-root #chatbox #dialogue-options button:hover, #game-root #chatbox #dialogue-options button:active { color: #fff !important; }
+#game-root #chatbox #dialogue-options button.cont { color: #0000c0 !important; }
+#game-root #chatbox #dialogue-options button.cont:hover, #game-root #chatbox #dialogue-options button.cont:active { color: #fff !important; }
+#game-root #chatbox #dialogue.has-head #dialogue-options { clear: both; }
+
+/* ---- OSRS-style skills grid ---- */
+#game-root #skills-list, #skills-list { display: grid !important; grid-template-columns: repeat(3, 1fr); gap: 2px; padding: 2px; }
+.skill-cell {
+  display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+  background: linear-gradient(#4a3c2c, #3a2e20); border: 1px solid #1e160c; border-radius: 3px;
+  box-shadow: inset 0 1px 0 #6a5640; padding: 1px 4px; min-height: 30px; box-sizing: border-box;
+}
+.skill-cell:active { filter: brightness(1.3); }
+.skill-cell .sk-icon { font-size: 16px; line-height: 1; }
+.skill-cell .sk-lv { position: relative; width: 26px; height: 26px; font-weight: bold; font-size: 11px; color: #ffff00; text-shadow: 1px 1px 0 #000; }
+.skill-cell .sk-cur { position: absolute; left: 0; top: 0; }
+.skill-cell .sk-max { position: absolute; right: 0; bottom: 0; }
+.skill-cell .sk-lv::after { content: '/'; position: absolute; left: 10px; top: 6px; color: #ffff00; font-weight: normal; }
+.skill-cell .sk-cur.boost-up { color: #30ff30; } .skill-cell .sk-cur.boost-down { color: #ff3030; }
+#skills-list .skill-total {
+  grid-column: 1 / -1; display: flex; justify-content: center; gap: 6px; align-items: center;
+  background: linear-gradient(#4a3c2c, #3a2e20); border: 1px solid #1e160c; border-radius: 3px; color: #ffff00; font-size: 11px; padding: 4px; text-shadow: 1px 1px 0 #000;
+}
+@media (min-width: 601px) { .skill-cell { min-height: 38px; } .skill-cell .sk-icon { font-size: 20px; } .skill-cell .sk-lv { font-size: 13px; width: 30px; height: 30px; } .skill-cell .sk-lv::after { left: 12px; top: 7px; } }
+/* OSRS: while talking, the dialogue replaces the chat history */
+#game-root #chatbox:has(#dialogue:not([hidden])) #chat-messages { display: none; }
+@media (max-width: 600px) {
+  #game-root #toast { top: calc(44px + env(safe-area-inset-top)) !important; bottom: auto !important; left: 8px !important; right: auto !important; transform: none !important; max-width: 52%; }
+}
+/* Let scrollable panels scroll by finger (page itself stays locked) */
+#game-root #side-panel #tab-content { overflow-y: auto !important; -webkit-overflow-scrolling: touch; touch-action: pan-y; overscroll-behavior: contain; }
+#tab-content > *, #chat-messages, #game-root #chatbox #dialogue, #trade-right, #trade-left, .info-body { touch-action: pan-y; }
+#chat-messages, #trade-right, #trade-left { overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+
+
+/* ---- Character select / create ---- */
+#title-screen.char-mode { justify-content: flex-start; padding: 24px 12px 40px; overflow-y: auto; gap: 10px;
+  background: radial-gradient(ellipse at center, #5a3a18 0%, #2a1a0c 55%, #120c06 100%); }
+#title-screen .char-list { width: min(360px, 94vw); display: flex; flex-direction: column; gap: 8px; max-height: 55vh; overflow-y: auto; }
+.char-card { display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  background: linear-gradient(#c9b07a, #a89058); border: 2px solid #5a3a10; border-radius: 8px; padding: 10px 12px; color: #2a1a08; }
+.char-name { font: bold 16px Georgia, serif; }
+.char-meta { font-size: 11px; color: #4a3020; }
+.char-card-acts { display: flex; flex-direction: column; gap: 4px; }
+.title-btn { background: #6a4a1a; border: 2px solid #ffd700; color: #ffd700; font-size: 14px; padding: 8px 16px; border-radius: 6px; cursor: pointer; }
+.title-btn.danger { border-color: #c44; color: #fcc; background: #4a2020; }
+.title-btn.ghost { background: transparent; color: #c9a86c; border-color: #8a7a5a; }
+.title-btn:active { transform: scale(0.98); }
+.char-confirm { background: #3a2010; border: 2px solid #c44; color: #f0d8a0; padding: 12px; border-radius: 8px; max-width: 320px; text-align: center; display: flex; flex-direction: column; gap: 8px; }
+.char-create { width: min(360px, 94vw); background: linear-gradient(#d8c090, #b09860); border: 3px solid #5a3a10; border-radius: 10px; padding: 12px; color: #2a1a08; }
+.char-preview-wrap { display: flex; justify-content: center; margin-bottom: 8px; }
+#char-preview { width: 96px; height: 96px; image-rendering: auto; background: #3a2a18; border: 2px solid #5a3a10; border-radius: 8px; }
+.char-field { display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: bold; margin-bottom: 8px; }
+.char-field input { font-size: 16px; padding: 8px; border: 2px solid #5a3a10; border-radius: 4px; background: #f5ecd0; }
+.picker-row { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+.picker-lab { width: 48px; font-size: 12px; font-weight: bold; }
+.picker-arr { width: 36px; height: 36px; border-radius: 6px; border: 2px solid #5a3a10; background: #6a4a1a; color: #ffd700; font-size: 14px; }
+.picker-sw { flex: 1; display: flex; justify-content: center; }
+.swatch { display: inline-block; width: 28px; height: 28px; border-radius: 4px; border: 2px solid #3a2a10; }
+.swatch.none { background: repeating-linear-gradient(45deg,#ccc,#ccc 4px,#eee 4px,#eee 8px); text-align: center; line-height: 24px; font-size: 12px; }
+.char-create-acts { display: flex; gap: 8px; justify-content: center; margin-top: 10px; }
+.char-err { color: #8a1010; font-size: 12px; text-align: center; min-height: 16px; margin-top: 4px; }
+
+.nameplate { position: absolute; transform: translate(-50%, -100%); color: #ffff40; font: bold 11px/1.2 Verdana, sans-serif;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; white-space: nowrap; pointer-events: none; z-index: 5; }
+.nameplate.self { color: #80ff80; }
+#players-online { position: absolute; right: 8px; bottom: -2px; transform: translateY(100%);
+  background: rgba(20,12,4,0.75); color: #c9a86c; font-size: 10px; padding: 2px 6px; border-radius: 4px; white-space: nowrap; pointer-events: none; }
+#minimap-cluster { position: relative; }
+.chat-line.public { color: #ffffff; }
+.chat-line.pm { color: #40e0e0; }
+.chat-line.posse { color: #40c040; }
+.chat-line.friend { color: #ff80ff; }
+.f-on { color: #3d3; font-size: 11px; }
+.f-off { color: #c44; font-size: 11px; }
+.posse-members { max-height: 120px; overflow-y: auto; margin: 4px 0; }
+
+/* ============================================================
+   OSRS Mobile polish: inventory (borderless), chat filters,
+   landscape-first layout with safe-area + UI scale
+   ============================================================ */
+:root {
+  --osrs-stone: #3e3529;
+  --osrs-stone-dark: #2b241b;
+  --osrs-stone-light: #4b4237;
+  --osrs-bevel: #1e1810;
+  --osrs-bevel-hi: #6a5d4a;
+  --osrs-tab: #4a3c2c;
+  --osrs-tab-active: #8a3020;
+  --ui-pad: max(4px, env(safe-area-inset-right, 0px));
+  --ui-pad-l: max(4px, env(safe-area-inset-left, 0px));
+  --ui-pad-b: max(4px, env(safe-area-inset-bottom, 0px));
+  --ui-pad-t: max(4px, env(safe-area-inset-top, 0px));
+  --panel-w: clamp(148px, 22vw, 200px);
+  --chat-h: clamp(52px, 14vh, 96px);
+  --mm-size: clamp(96px, 18vmin, 150px);
+}
+
+/* ---- Inventory: OSRS borderless slots, yellow qty ---- */
+#game-root #side-panel {
+  background: linear-gradient(180deg, var(--osrs-stone-light), var(--osrs-stone)) !important;
+  border: 2px solid var(--osrs-bevel) !important;
+  box-shadow: inset 0 0 0 1px var(--osrs-bevel-hi), 0 0 10px rgba(0,0,0,0.55) !important;
+  border-radius: 3px !important;
+}
+#game-root #side-panel #tab-content {
+  background: var(--osrs-stone) !important;
+  border: 1px solid var(--osrs-bevel) !important;
+  box-shadow: inset 0 0 0 1px #524737 !important;
+}
+#game-root #side-panel .tab-btn {
+  background: linear-gradient(#5a4c3a, var(--osrs-tab)) !important;
+  border: 1px solid var(--osrs-bevel) !important;
+  color: #d8c8a0 !important;
+  box-shadow: inset 0 1px 0 #7a6a54 !important;
+  border-radius: 2px !important;
+}
+#game-root #side-panel .tab-btn.active {
+  background: linear-gradient(#a83828, #6e1e12) !important;
+  border-color: #c9a86c !important;
+  color: #ffd700 !important;
+  box-shadow: inset 0 1px 0 #d06050 !important;
+}
+#game-root #inv-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 1px !important;
+  background: transparent !important;
+  padding: 1px !important;
+}
+#game-root #tab-inventory .inv-slot,
+#game-root .inv-slot {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 0;
+}
+#game-root .inv-slot:hover,
+#game-root .inv-slot.selected {
+  background: rgba(255, 255, 180, 0.12) !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 220, 100, 0.55) !important;
+}
+#game-root .inv-slot .qty {
+  position: absolute !important;
+  top: 0 !important; left: 1px !important;
+  right: auto !important; bottom: auto !important;
+  font: bold 9px/1 Verdana, sans-serif !important;
+  text-shadow: 1px 1px 0 #000, -1px 0 #000, 0 -1px #000 !important;
+  pointer-events: none;
+  z-index: 1;
+}
+#game-root .inv-slot .qty-yellow { color: #ffff00 !important; }
+#game-root .inv-slot .qty-white { color: #ffffff !important; }
+#game-root .inv-slot .qty-green { color: #00ff80 !important; }
+#game-root #coins-display {
+  color: #ffff00 !important; text-shadow: 1px 1px 0 #000;
+  border-top: 1px solid #1e1810; padding-top: 2px; margin-top: 2px;
+  font-size: 10px !important;
+}
+
+/* ---- Chat: OSRS mobile filters + colours ---- */
+#game-root #chatbox {
+  background: rgba(30, 24, 16, 0.88) !important;
+  border: 2px solid #1e1810 !important;
+  box-shadow: inset 0 0 0 1px #5a4c3a, 0 0 8px rgba(0,0,0,0.5) !important;
+  border-radius: 3px !important;
+  padding: 2px 3px !important;
+  display: flex; flex-direction: column;
+}
+#chat-filters {
+  display: flex; gap: 2px; flex-wrap: nowrap; margin-bottom: 2px;
+  padding-bottom: 2px; border-bottom: 1px solid #1e1810;
+}
+.chat-filter {
+  flex: 1 1 0; min-width: 0;
+  background: linear-gradient(#4a3c2c, #2b241b);
+  border: 1px solid #1e1810; color: #c9b48a;
+  font: bold 9px/1.2 Verdana, sans-serif;
+  padding: 3px 2px; border-radius: 2px; cursor: pointer;
+  text-shadow: 1px 1px 0 #000;
+}
+.chat-filter.active { background: linear-gradient(#8a3020, #5e1c12); color: #ffd700; border-color: #c9a86c; }
+.chat-filter.min { opacity: 0.7; }
+#game-root #chat-messages {
+  font: 11px/1.3 Verdana, sans-serif !important;
+  color: #e8e0d0;
+  padding: 2px !important;
+  overflow-y: auto;
+}
+#game-root.chat-min #chat-messages { height: 0 !important; min-height: 0 !important; padding: 0 !important; overflow: hidden !important; }
+#game-root.chat-min #chat-input-row { display: none !important; }
+#game-root.chat-min #chat-filters { border-bottom: none; margin: 0; }
+.chat-line.game, .chat-line.system { color: #e8e0d0; }
+.chat-line.combat { color: #ff6060; }
+.chat-line.xp, .chat-line.level { color: #40c040; }
+.chat-line.quest { color: #c080ff; }
+.chat-line.public { color: #ffffff; }
+.chat-line.public .chat-name { color: #0040ff; font-weight: bold; text-shadow: 0 0 1px #fff; }
+.chat-line.player { color: #ffffff; }
+.chat-line.player .chat-name { color: #0040ff; font-weight: bold; }
+.chat-line.pm { color: #ffffff; }
+.chat-line.pm .chat-name { color: #00c8c8; font-weight: bold; }
+.chat-line.posse { color: #ffffff; }
+.chat-line.posse .chat-name { color: #00a000; font-weight: bold; }
+.chat-line.friend { color: #ffffff; }
+.chat-line.friend .chat-name { color: #ff80ff; font-weight: bold; }
+.chat-line.npc { color: #0000a0; }
+#game-root #chat-prompt {
+  color: #00a0ff !important; font: bold 11px Verdana, sans-serif !important;
+  text-shadow: 1px 1px 0 #000;
+}
+#game-root #chat-input-row { border-top: 1px solid #1e1810; padding-top: 2px; }
+#game-root #chat-input {
+  background: #1a140c !important; border: 1px solid #3a3020 !important;
+  color: #fff !important; font-size: 12px !important;
+}
+
+/* ---- Collapsed panel: only tab strip visible ---- */
+#game-root #side-panel.collapsed {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  width: auto !important;
+  max-width: var(--panel-w);
+  pointer-events: none;
+}
+#game-root #side-panel.collapsed #tab-content { display: none !important; }
+#game-root #side-panel.collapsed .tab-row { pointer-events: none; }
+#game-root #side-panel.collapsed .tab-btn { pointer-events: auto; opacity: 0.95; }
+#game-root #side-panel.collapsed #coins-display { display: none !important; }
+
+/* ---- LANDSCAPE (OSRS Mobile primary): world fills screen ---- */
+@media (orientation: landscape) {
+  #game-root #minimap-cluster {
+    top: var(--ui-pad-t) !important;
+    right: var(--ui-pad) !important;
+    left: auto !important;
+    transform: scale(calc(var(--mm-size) / 150));
+    transform-origin: top right;
+  }
+  #game-root #side-panel {
+    top: auto !important;
+    right: var(--ui-pad) !important;
+    bottom: var(--ui-pad-b) !important;
+    left: auto !important;
+    width: var(--panel-w) !important;
+    max-height: calc(100vh - var(--mm-size) - var(--ui-pad-t) - var(--ui-pad-b) - 12px) !important;
+  }
+  #game-root #side-panel:not(.collapsed) #tab-content {
+    max-height: calc(100vh - var(--mm-size) - 88px) !important;
+    overflow-y: auto !important;
+  }
+  #game-root #chatbox {
+    left: var(--ui-pad-l) !important;
+    right: calc(var(--panel-w) + var(--ui-pad) + 8px) !important;
+    bottom: var(--ui-pad-b) !important;
+    top: auto !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+  #game-root #chat-messages { height: var(--chat-h) !important; }
+  #game-root.chat-min #side-panel { /* panel independent of chat min */ }
+  #game-root #hover-text {
+    left: var(--ui-pad-l) !important;
+    bottom: calc(var(--chat-h) + var(--ui-pad-b) + 28px) !important;
+    max-width: 45% !important;
+  }
+  #game-root.chat-min #hover-text { bottom: calc(28px + var(--ui-pad-b)) !important; }
+  /* Inventory: borderless, fit without scroll in landscape panel */
+  #game-root #inv-grid { grid-auto-rows: clamp(22px, 5.5vh, 32px) !important; }
+  #game-root #tab-inventory .inv-slot { height: clamp(22px, 5.5vh, 32px) !important; }
+  #game-root .inv-slot .icon { font-size: clamp(12px, 3.2vh, 18px) !important; }
+}
+
+/* ---- PORTRAIT: stacked, world maximised above HUD ---- */
+@media (orientation: portrait) {
+  #game-root #minimap-cluster {
+    top: var(--ui-pad-t) !important;
+    right: var(--ui-pad) !important;
+    transform: scale(0.92);
+    transform-origin: top right;
+  }
+  #game-root #side-panel {
+    top: auto !important;
+    right: var(--ui-pad) !important;
+    bottom: var(--ui-pad-b) !important;
+    width: clamp(150px, 44vw, 176px) !important;
+    max-height: min(46vh, calc(100vh - 210px)) !important;
+  }
+  #game-root #side-panel:not(.collapsed) #tab-content {
+    max-height: min(230px, 32vh) !important;
+    overflow-y: auto !important;
+  }
+  #game-root #chatbox {
+    left: var(--ui-pad-l) !important;
+    right: calc(clamp(150px, 44vw, 176px) + 8px) !important;
+    bottom: var(--ui-pad-b) !important;
+    width: auto !important;
+  }
+  #game-root #chat-messages { height: clamp(40px, 9vh, 64px) !important; }
+  #game-root #inv-grid { grid-auto-rows: 28px !important; gap: 1px !important; }
+  #game-root #tab-inventory .inv-slot { height: 28px !important; }
+  #game-root .inv-slot .icon { font-size: 12px !important; }
+  #game-root .inv-slot .qty { font-size: 8px !important; }
+  .chat-filter { font-size: 8px; padding: 2px 1px; }
+}
+
+/* Ensure toast/boss don't cover minimap */
+#game-root #toast {
+  top: calc(var(--ui-pad-t) + 8px) !important;
+  left: var(--ui-pad-l) !important;
+  right: auto !important;
+  bottom: auto !important;
+  max-width: 42% !important;
+}
+#game-root #boss-bar {
+  top: calc(var(--ui-pad-t) + 4px) !important;
+  left: 50% !important; transform: translateX(-50%);
+  max-width: min(280px, 50vw);
+}
+
+
+/* HARD: minimap cluster always top-right (OSRS mobile) */
+#game-root #minimap-cluster {
+  position: absolute !important;
+  top: max(4px, env(safe-area-inset-top, 0px)) !important;
+  right: max(4px, env(safe-area-inset-right, 0px)) !important;
+  left: auto !important;
+  bottom: auto !important;
+  z-index: 25 !important;
+  transform: none !important; /* avoid scaled bbox surprises; size via width */
+}
+@media (orientation: landscape) {
+  #game-root #minimap-cluster {
+    width: clamp(120px, 24vh, 180px) !important;
+    height: clamp(110px, 22vh, 168px) !important;
+  }
+}
+@media (orientation: portrait) {
+  #game-root #minimap-cluster {
+    width: 142px !important;
+    height: 140px !important;
+  }
+}
+
+/* ============================================================
+   OSRS Mobile landscape — match ref-osrs-mobile-landscape.jpg
+   Chat TOP-LEFT · Minimap TOP-RIGHT · Panel BOTTOM-RIGHT with
+   TWO VERTICAL tab columns on the panel's right edge
+   ============================================================ */
+
+#hud-left {
+  display: none;
+  position: absolute;
+  z-index: 26;
+  flex-direction: column;
+  gap: 4px;
+  pointer-events: none;
+}
+#hud-left .hud-ico {
+  pointer-events: auto;
+  width: 30px; height: 30px;
+  padding: 0;
+  border-radius: 4px;
+  border: 1px solid #1e1810;
+  background: linear-gradient(#4a3c2c, #2b241b);
+  color: #e8d5a3;
+  font-size: 14px;
+  line-height: 28px;
+  box-shadow: inset 0 1px 0 #6a5d4a, 0 1px 3px rgba(0,0,0,0.5);
+}
+#hud-left .hud-ico:active { filter: brightness(1.25); }
+
+@media (orientation: landscape) {
+  /* Far-left icon strip (chat / logout) */
+  #hud-left {
+    display: flex;
+    top: max(6px, env(safe-area-inset-top));
+    left: max(4px, env(safe-area-inset-left));
+  }
+
+  /* Chat: TOP-LEFT beside the icon strip */
+  #game-root #chatbox {
+    top: max(4px, env(safe-area-inset-top)) !important;
+    left: calc(max(4px, env(safe-area-inset-left)) + 36px) !important;
+    bottom: auto !important;
+    right: auto !important;
+    width: min(38vw, 360px) !important;
+    max-width: calc(100vw - var(--panel-w) - 200px) !important;
+    z-index: 22 !important;
+  }
+  #game-root #chat-messages {
+    height: clamp(64px, 22vh, 110px) !important;
+    max-height: 28vh !important;
+  }
+  #game-root.chat-min #chatbox {
+    width: auto !important;
+    min-width: 120px;
+  }
+  #game-root #hover-text {
+    top: auto !important;
+    left: calc(max(4px, env(safe-area-inset-left)) + 36px) !important;
+    bottom: max(8px, env(safe-area-inset-bottom)) !important;
+    max-width: 40% !important;
+  }
+
+  /* Minimap cluster: TOP-RIGHT circle + orbs on its left arc */
+  #game-root #minimap-cluster {
+    top: max(4px, env(safe-area-inset-top)) !important;
+    right: max(4px, env(safe-area-inset-right)) !important;
+    left: auto !important;
+    width: 168px !important;
+    height: 168px !important;
+    z-index: 25 !important;
+    transform: none !important;
+  }
+  #game-root #minimap-cluster #minimap-wrap {
+    top: 18px !important; right: 4px !important;
+    width: 120px !important; height: 120px !important;
+  }
+  #game-root #minimap-cluster #xp-btn {
+    position: absolute !important;
+    top: 0 !important; left: 44px !important;
+    width: 26px !important; height: 26px !important;
+    font-size: 10px !important; z-index: 4;
+  }
+  #game-root #minimap-cluster #compass {
+    top: 2px !important; left: 72px !important;
+    width: 26px !important; height: 26px !important;
+    line-height: 22px !important; font-size: 11px !important;
+  }
+  #game-root #minimap-cluster #xp-counter {
+    top: 0 !important; right: calc(100% - 40px) !important; left: auto !important;
+    font-size: 9px !important;
+  }
+  /* Orbs arc down the left of the circle */
+  #game-root #minimap-cluster #hp-orb { top: 28px !important; left: 2px !important; width: 34px !important; height: 34px !important; }
+  #game-root #minimap-cluster #faith-orb { top: 64px !important; left: -2px !important; width: 32px !important; height: 32px !important; }
+  #game-root #minimap-cluster #run-orb { top: 98px !important; left: 4px !important; width: 32px !important; height: 32px !important; }
+  #game-root #minimap-cluster #spec-orb { top: 128px !important; left: 28px !important; width: 32px !important; height: 32px !important; }
+  #game-root #minimap-cluster #worldmap-btn {
+    top: auto !important; bottom: 4px !important; right: 2px !important;
+    width: 28px !important; height: 28px !important;
+  }
+  #game-root #minimap-cluster .zoom-btn { display: none !important; } /* declutter; pinch still works */
+  #players-online { right: 4px !important; bottom: -16px !important; font-size: 9px !important; }
+
+  /* Side panel BOTTOM-RIGHT: content | 2 vertical tab columns */
+  #game-root #side-panel {
+    top: auto !important;
+    right: max(4px, env(safe-area-inset-right)) !important;
+    bottom: max(4px, env(safe-area-inset-bottom)) !important;
+    left: auto !important;
+    width: auto !important;
+    max-width: min(46vw, 280px) !important;
+    max-height: calc(100dvh - 180px) !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
+    gap: 2px !important;
+    padding: 3px !important;
+    z-index: 24 !important;
+  }
+  #game-root #side-panel #tab-content {
+    order: 1 !important;
+    width: clamp(140px, 22vw, 188px) !important;
+    min-width: 130px !important;
+    max-height: calc(100dvh - 190px) !important;
+    overflow-y: auto !important;
+    margin: 0 !important;
+  }
+  /* Two VERTICAL columns of tabs to the RIGHT of content */
+  #game-root #side-panel .tab-row-1,
+  #game-root #side-panel .tab-row-2,
+  #game-root #side-panel #tab-buttons,
+  #game-root #side-panel #tab-buttons-bottom {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    gap: 2px !important;
+    width: 28px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+  #game-root #side-panel .tab-row-1,
+  #game-root #side-panel #tab-buttons { order: 2 !important; }
+  #game-root #side-panel .tab-row-2,
+  #game-root #side-panel #tab-buttons-bottom { order: 3 !important; }
+  #game-root #side-panel .tab-btn {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 14px !important;
+    line-height: 26px !important;
+    border-radius: 3px !important;
+  }
+  #game-root #side-panel.collapsed {
+    width: auto !important;
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+  #game-root #side-panel.collapsed #tab-content { display: none !important; width: 0 !important; min-width: 0 !important; }
+  #game-root #side-panel.collapsed .tab-row-1,
+  #game-root #side-panel.collapsed .tab-row-2 { pointer-events: auto; }
+
+  /* Inventory fills the panel width without huge empty gaps */
+  #game-root #inv-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    grid-auto-rows: clamp(24px, 6.5vh, 34px) !important;
+  }
+  #game-root #tab-inventory .inv-slot { height: clamp(24px, 6.5vh, 34px) !important; }
+}
+
+/* Portrait keeps chat bottom-left; hide left strip or show compact */
+@media (orientation: portrait) {
+  #hud-left {
+    display: flex;
+    top: auto;
+    bottom: calc(max(4px, env(safe-area-inset-bottom)) + 8px);
+    left: max(4px, env(safe-area-inset-left));
+  }
+  #game-root #chatbox {
+    /* stay bottom-left in portrait (stacked) */
+    top: auto !important;
+    bottom: max(4px, env(safe-area-inset-bottom)) !important;
+    left: calc(max(4px, env(safe-area-inset-left)) + 36px) !important;
+  }
 }

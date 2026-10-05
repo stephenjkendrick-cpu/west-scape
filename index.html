@@ -4,14 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="West-Scape" />
+  <link rel="apple-touch-icon" href="icon-180.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
   <title>West-Scape</title>
-  <link rel="stylesheet" href="style.css?v=1791215218" />
+  <link rel="stylesheet" href="style.css?v=1791217506" />
   
 </head>
 <body>
   <div id="game-root">
     <canvas id="game-canvas"></canvas>
 
+    <div id="hud-left">
+      <button type="button" id="hud-chat-toggle" class="hud-ico" title="Toggle chat">💬</button>
+      <button type="button" id="hud-logout" class="hud-ico" title="Logout">🚪</button>
+    </div>
     <div id="hover-text"></div>
     <div id="boss-bar" hidden><div id="boss-name"></div><div id="boss-hp"><div id="boss-fill"></div><span id="boss-num"></span></div></div>
     <div id="toast"></div>
@@ -32,6 +41,7 @@
       <button id="zoom-in-btn" class="zoom-btn" title="Zoom in">+</button>
       <button id="zoom-out-btn" class="zoom-btn" title="Zoom out">−</button>
       <button id="worldmap-btn" title="World map">🗺️</button>
+      <div id="players-online" hidden>Players: 1</div>
     </div>
 
     <!-- Side tabs -->
@@ -51,11 +61,18 @@
       </div>
     </div>
 
-    <!-- Chatbox (OSRS: dialogue replies live here, not a centered modal) -->
+    <!-- Chatbox (OSRS Mobile-style) -->
     <div id="chatbox">
-      <button id="chat-toggle" title="Toggle chat">▾</button>
+      <div id="chat-filters">
+        <button class="chat-filter active" data-cf="all" title="All / tap again to minimize">All</button>
+        <button class="chat-filter" data-cf="game">Game</button>
+        <button class="chat-filter" data-cf="public">Public</button>
+        <button class="chat-filter" data-cf="private">Private</button>
+        <button class="chat-filter" data-cf="posse">Posse</button>
+      </div>
       <div id="chat-messages"></div>
       <div id="dialogue" hidden>
+        <img id="dialogue-head" alt="" hidden>
         <div id="dialogue-name"></div>
         <div id="dialogue-text"></div>
         <div id="dialogue-options"></div>
@@ -82,11 +99,10 @@
     <!-- Hitsplats overlay (DOM positioned over canvas) -->
     <div id="hitsplats"></div>
 
-    <!-- Title screen (shown after logout) -->
+    <!-- Title / character select (filled by chars.js) -->
     <div id="title-screen" hidden>
       <div class="title-logo">West-Scape</div>
       <div class="title-sub">A frontier adventure</div>
-      <button id="title-play">Play</button>
       <div class="title-note">Your progress is saved in this browser.</div>
     </div>
 
@@ -95,6 +111,6 @@
     <!-- Loading -->
     <div id="loading">Loading West-Scape…</div>
   </div>
-  <script type="module" src="game.js?v=1791215218"></script>
+  <script type="module" src="game.js?v=1791217506"></script>
 </body>
 </html>
