@@ -352,7 +352,14 @@ html, body {
 .pd-cell { background: #1a1208; border: 1px solid #5a3a1a; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; }
 .pd-cell.filled { border-color: #c9a86c; background: #2a1a0a; }
 .pd-blank { visibility: hidden; }
-.pd-empty { opacity: 0.25; filter: grayscale(1); font-size: 18px; }
+.pd-empty { opacity: 0.28; filter: none; font-size: 18px; color: #8a7a68; display: flex; align-items: center; justify-content: center; }
+.pd-sil { width: 70%; height: 70%; }
+.pd-sil .eq-ico, .pd-empty .eq-ico { width: 100%; height: 100%; display: block; }
+.pd-cell.empty { background: #15100a; }
+.pd-cell.filled .inv-icon, .pd-cell.filled img, .pd-cell.filled .item-icon { filter: none; }
+.tab-btn-svg { display: inline-flex; align-items: center; justify-content: center; color: inherit; }
+.tab-btn-svg .eq-ico { width: 1.05em; height: 1.05em; display: block; pointer-events: none; }
+.tab-btn-svg .eq-hat { width: 1.15em; height: 1.15em; }
 .bonus-table { font-size: 11px; color: #e8d5a3; display: grid; grid-template-columns: 1fr 1fr; gap: 1px 6px; }
 .bonus-table .bt-h { grid-column: 1 / -1; color: #ffd700; margin-top: 3px; }
 .faith-bar { position: relative; height: 14px; background: #1a1208; border: 1px solid #5a3a1a; margin-bottom: 5px; }
@@ -1513,9 +1520,13 @@ body.ws-dragging #game-root #tab-inventory.active .inv-slot {
 @keyframes rotPhone { 0%, 20% { transform: rotate(0deg); } 50%, 80% { transform: rotate(-90deg); } 100% { transform: rotate(0deg); } }
 
 /* Creator badge / nameplate / toast */
-.nameplate.creator { color: #ffd700; text-shadow: 0 0 4px #000, 1px 1px 0 #000; font-weight: bold; text-align: center; }
-.nameplate.creator .creator-star { font-size: 12px; }
-.nameplate.creator .creator-sub { display: block; font-size: 9px; color: #ffe680; letter-spacing: 0.5px; margin-top: 1px; }
+.nameplate.creator { color: #ffd700; text-shadow: 0 0 4px #000, 1px 1px 0 #000; font-weight: bold; text-align: center; line-height: 1.15; }
+.nameplate.creator .creator-star { font-size: 11px; }
+.nameplate.creator .creator-sub {
+  display: block; font-size: 9px; color: #ffe680; letter-spacing: 0.8px;
+  margin-bottom: 1px; text-transform: uppercase;
+}
+.nameplate.creator .creator-line { white-space: nowrap; }
 .chat-line.creator-chat .chat-name { color: #ffd700 !important; }
 .creator-toast {
   position: fixed; top: 18%; left: 50%; transform: translateX(-50%);
