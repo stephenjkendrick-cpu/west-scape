@@ -898,7 +898,7 @@ html, body { touch-action: pan-x pan-y; overflow: hidden; overscroll-behavior: n
 .nameplate { position: absolute; transform: translate(-50%, -100%); color: #ffff40; font: bold 11px/1.2 Verdana, sans-serif;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; white-space: nowrap; pointer-events: none; z-index: 5; }
 .nameplate.self { color: #80ff80; }
-.nameplate.npc { font-size: 10px; opacity: 0.95; }
+.nameplate.npc { font-size: 8px; opacity: 0.95; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; }
 #players-online { position: absolute; right: 8px; bottom: -2px; transform: translateY(100%);
   background: rgba(20,12,4,0.75); color: #c9a86c; font-size: 10px; padding: 2px 6px; border-radius: 4px; white-space: nowrap; pointer-events: none; }
 #minimap-cluster { position: relative; }
@@ -2114,3 +2114,40 @@ html, body {
 }
 @keyframes p2pWarnPulse { from { filter: brightness(1); } to { filter: brightness(1.12); } }
 .p2p-confirm .p2p-value { margin: 2px 0 8px; }
+
+/* ---- Character code import / export (v11) ---- */
+#import-char-box.import-code-box { margin-top: 6px; width: min(360px, 94vw); }
+.import-code-box .char-field { color: #f0d8a0; margin-bottom: 4px; text-align: left; }
+.import-code-row { display: flex; gap: 6px; align-items: stretch; }
+.import-code-row input { flex: 1; min-width: 0; font-size: 16px; padding: 8px; border: 2px solid #5a3a10; border-radius: 4px; background: #f5ecd0; color: #2a1a08; }
+.import-code-row .title-btn { flex-shrink: 0; }
+.import-code-row .title-btn:disabled { opacity: 0.6; }
+.import-code-box .char-err { color: #ffb0a0; text-align: left; }
+.char-card { cursor: pointer; }
+.char-card-acts .title-btn[data-play] { font-size: 15px; padding: 8px 18px; font-weight: bold; background: #2f6a1a; border-color: #ffd700; color: #fff4c0; min-width: 76px; }
+.char-confirm.code-box { border-color: #ffd700; }
+.code-out { font: bold 22px/1.2 Georgia, serif; text-align: center; padding: 6px; border: 2px solid #5a3a10; border-radius: 6px; background: #f5ecd0; color: #2a1a08; width: 100%; box-sizing: border-box; }
+.code-help { font-size: 12px; color: #e8d0a0; }
+.code-acts { display: flex; gap: 8px; justify-content: center; }
+.login-code-box { background: #2a1a0a; border: 1px solid #5a3a1a; border-radius: 6px; padding: 6px; margin: 4px 0; }
+.login-code { font-size: 13px; color: #f0e0c0; }
+.login-code b { color: #ffd700; font-size: 15px; letter-spacing: 0.5px; }
+/* Short landscape screens (iPhone 852x393 minus Safari bars): page scrolls, nothing gets squeezed */
+#title-screen.char-mode { overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; touch-action: pan-y; }
+#title-screen.char-mode > * { flex-shrink: 0; }
+@media (max-height: 450px) {
+  #title-screen.char-mode { justify-content: flex-start; padding: max(4px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) 16px max(8px, env(safe-area-inset-left)); gap: 6px; }
+  #title-screen.char-mode .title-logo { font-size: 20px; margin: 0; line-height: 1.1; }
+  #title-screen.char-mode .title-sub { font-size: 11px; margin: 0; }
+  #title-screen.char-mode .title-note { font-size: 10px; margin: 0; }
+  #title-screen .char-list { max-height: none; overflow: visible; width: min(520px, 94vw); gap: 6px; }
+  #title-screen .char-card { padding: 6px 10px; min-height: 56px; }
+  #title-screen .char-card-acts { flex-direction: row; flex-wrap: nowrap; align-items: center; gap: 6px; }
+  #title-screen .char-card-acts .title-btn[data-play] { font-size: 17px; padding: 10px 22px; min-height: 44px; }
+  #title-screen .char-card-acts .title-btn.ghost, #title-screen .char-card-acts .title-btn.danger { min-height: 34px; }
+  #import-char-box.import-code-box { width: min(520px, 94vw); margin-top: 2px; }
+}
+@media (orientation: landscape) and (max-height: 450px) {
+  .char-confirm.code-box { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 95; width: min(340px, 90vw); box-sizing: border-box; }
+}
+#title-screen .char-card .title-btn.ghost { color: #3a2408; border-color: #5a3a10; background: rgba(255, 240, 200, 0.45); font-weight: bold; }
