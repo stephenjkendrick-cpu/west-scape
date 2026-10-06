@@ -993,7 +993,7 @@ html, body { touch-action: pan-x pan-y; overflow: hidden; overscroll-behavior: n
   font-size: 10px !important;
 }
 
-/* ---- Chat: OSRS mobile filters + colours ---- */
+/* ---- Chat: OSRS mobile filters + colors ---- */
 #game-root #chatbox {
   background: rgba(30, 24, 16, 0.88) !important;
   border: 2px solid #1e1810 !important;
@@ -1882,3 +1882,232 @@ body.ws-dragging #game-root #tab-inventory.active .inv-slot {
   #game-root #minimap-cluster #xp-btn { left: 8px !important; width: 26px !important; height: 26px !important; }
   #game-root #minimap-cluster #compass { left: 92px !important; width: 26px !important; height: 26px !important; }
 }
+
+/* Character select — Creator key unlock (no login required) */
+.creator-key-select {
+  margin: 8px auto;
+  max-width: 320px;
+  text-align: left;
+  background: #2a1a0a;
+  border: 1px solid #5a3a1a;
+  border-radius: 6px;
+  padding: 8px;
+}
+.creator-key-select input {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 12px;
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid #5a3a1a;
+  background: #1a1208;
+  color: #f0e0c0;
+}
+#char-creator-key-btn { margin-top: 6px; }
+
+/* ============================================================
+   dist-v6: Settings / tab panels must touch-scroll on iPhone
+   (A2HS landscape). Scroll container needs pointer-events +
+   pan-y; inventory keeps click-through via :has().
+   ============================================================ */
+html, body {
+  /* Allow descendants with pan-y to scroll; canvas stays touch-action:none */
+  touch-action: manipulation !important;
+}
+#game-canvas { touch-action: none !important; }
+
+#game-root #side-panel #tab-content {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-y !important;
+  overscroll-behavior: contain !important;
+}
+/* Non-inventory: scroll container MUST receive the gesture */
+#game-root #side-panel #tab-content:has(> .tab-pane.active:not(#tab-inventory)) {
+  pointer-events: auto !important;
+}
+#game-root #side-panel #tab-content:has(#tab-inventory.active) {
+  pointer-events: none !important;
+}
+#game-root #tab-content > .tab-pane.active:not(#tab-inventory) {
+  pointer-events: auto !important;
+  touch-action: pan-y !important;
+  min-height: min-content;
+  /* Grow with content so parent #tab-content becomes the scroller */
+  overflow: visible !important;
+}
+#game-root #tab-content > .tab-pane.active:not(#tab-inventory) * {
+  touch-action: pan-y;
+}
+/* Range inputs / text fields need their own gesture */
+#game-root #tab-content input,
+#game-root #tab-content button,
+#game-root #tab-content select,
+#game-root #tab-content textarea {
+  touch-action: manipulation !important;
+  pointer-events: auto !important;
+}
+/* Kill older portrait rule that forced overflow:hidden on all tabs */
+@media (max-width: 600px) {
+  #game-root #side-panel #tab-content {
+    overflow-y: auto !important;
+  }
+}
+@media (orientation: landscape) {
+  #game-root #side-panel #tab-content {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+  }
+}
+
+/* Painted PNG icons (from icons/items|tabs) — smooth, ~80% slot */
+.px-icon.px-painted {
+  image-rendering: auto !important;
+  image-rendering: -webkit-optimize-contrast;
+  filter: none;
+}
+#game-root .inv-slot .px-icon.px-painted,
+#game-root .pd-cell .px-icon.px-painted,
+#game-root .shop-slot .px-icon.px-painted,
+#game-root .trade-item .px-icon.px-painted {
+  width: 80% !important;
+  height: 80% !important;
+}
+#game-root .tab-btn .px-icon.px-painted,
+#game-root .tab-btn-svg .px-icon.px-painted {
+  width: 78% !important;
+  height: 78% !important;
+  max-width: 22px;
+  max-height: 22px;
+}
+.px-icon.px-canvas {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+
+/* OSRS ground-item labels — outlined, tier-colored, never steal taps */
+.ground-label {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  pointer-events: none !important;
+  z-index: 14;
+  font: bold 11px/1.05 Verdana, Geneva, sans-serif;
+  white-space: nowrap;
+  padding: 0 1px;
+  text-shadow:
+    1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000,
+    1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  color: #f0f0f0;
+}
+.ground-label[data-tier="white"]  { color: #f0f0f0; }
+.ground-label[data-tier="green"]  { color: #40e060; }
+.ground-label[data-tier="blue"]   { color: #40a0ff; }
+.ground-label[data-tier="purple"] { color: #c060ff; }
+.ground-label[data-tier="orange"] { color: #ff9030; }
+@media (orientation: landscape) and (max-height: 420px) {
+  .ground-label { font-size: 10px; }
+}
+
+
+/* P2P trade wish line (tap to accept) */
+.chat-line.tradewish {
+  color: #e080ff !important;
+  text-shadow: 1px 1px 0 #000;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.chat-line.tradewish:active { filter: brightness(1.2); }
+
+/* P2P trade UI */
+#trade-modal.p2p #trade-body { flex-direction: column; }
+#trade-modal.mode-p2ptrade #trade-left,
+#trade-modal.mode-p2ptrade #trade-right { width: 100%; max-height: 40%; }
+.p2p-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(52px, 1fr));
+  gap: 4px;
+  min-height: 56px;
+  padding: 2px 0 4px;
+}
+.p2p-slot.inv-slot {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(#4a3c2c, #322818);
+  border: 1px solid #1e160c;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.p2p-slot .px-icon,
+.p2p-slot img.px-icon,
+.p2p-slot canvas.px-icon {
+  width: 70% !important;
+  height: 70% !important;
+  max-width: 36px;
+  max-height: 36px;
+  object-fit: contain;
+  pointer-events: none;
+}
+.p2p-slot .qty {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  font: bold 11px/1 Verdana, sans-serif;
+  text-shadow: 1px 1px 0 #000;
+  z-index: 2;
+}
+.p2p-slot-name {
+  display: none; /* title attr + examine cover names in tight mobile grid */
+}
+.p2p-slot.flash { outline: 2px solid #c44; box-shadow: 0 0 6px #f44; }
+.p2p-acts { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; }
+.p2p-confirm { font-size: 12px; color: #e8d5a3; padding: 4px; max-height: 200px; overflow-y: auto; }
+.p2p-confirm-list { list-style: none; margin: 4px 0 10px; padding: 0; }
+.p2p-confirm-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 3px 4px; margin: 2px 0;
+  background: #2a2218; border: 1px solid #1a140c; border-radius: 2px;
+}
+.p2p-confirm-row .px-icon,
+.p2p-confirm-row img.px-icon,
+.p2p-confirm-row canvas.px-icon {
+  width: 28px !important; height: 28px !important; flex: 0 0 28px;
+}
+.p2p-confirm-txt { flex: 1; color: #e8d5a3; }
+.p2p-confirm .muted { color: #8a7a5a; }
+.trade-creator { color: #ffd700; font-size: 11px; }
+#trade-modal.mode-p2ptrade #trade-body { flex-direction: row; gap: 6px; }
+#trade-modal.mode-p2ptrade #trade-left,
+#trade-modal.mode-p2ptrade #trade-right {
+  flex: 1; width: auto; max-height: none; overflow-y: auto;
+}
+@media (orientation: landscape) and (max-height: 420px) {
+  .p2p-slot.inv-slot { min-height: 40px; }
+  .p2p-slot .px-icon { max-width: 28px; max-height: 28px; }
+}
+
+/* P2P trade offer values + unfair warning (OSRS-style) */
+.p2p-col { display: flex; flex-direction: column; min-height: 0; height: 100%; }
+.p2p-col .p2p-grid { flex: 1; min-height: 0; overflow: auto; }
+.p2p-value {
+  flex-shrink: 0; margin: 4px 2px 2px; padding: 3px 6px; text-align: center;
+  font-size: 12px; font-weight: bold; line-height: 1.2;
+  color: #ffff00; background: rgba(0,0,0,0.45); border: 1px solid #5a3a1a; border-radius: 2px;
+  text-shadow: 1px 1px 0 #000;
+}
+.p2p-value.unfair { color: #ff8080; border-color: #a03020; }
+.p2p-value-warn {
+  flex-shrink: 0; width: 100%; box-sizing: border-box; margin: 0 0 6px;
+  padding: 4px 8px; text-align: center; font-size: 11px; font-weight: bold;
+  color: #1a1000; background: linear-gradient(#ffcc33, #e09020);
+  border: 2px solid #a06010; border-radius: 3px;
+  text-shadow: none; animation: p2pWarnPulse 1.2s ease-in-out infinite alternate;
+}
+@keyframes p2pWarnPulse { from { filter: brightness(1); } to { filter: brightness(1.12); } }
+.p2p-confirm .p2p-value { margin: 2px 0 8px; }
