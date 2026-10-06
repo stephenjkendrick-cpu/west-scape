@@ -1,0 +1,16 @@
+West-Scape 3D models — all source assets are CC0 1.0 (public domain), processed in Blender (decimated,
+recoloured to vertex colours, re-rigged/merged) and packed with gltfpack.
+
+Quaternius (https://quaternius.com, CC0):
+- Universal Base Characters + Universal Animation Library  -> char_male, char_female, char_saloon, anims_human
+  https://quaternius.itch.io/universal-base-characters  https://quaternius.itch.io/universal-animation-library
+- Modular Character Outfits - Fantasy                    -> clothing on char_male / char_female
+  https://quaternius.itch.io/modular-character-outfits-fantasy
+- Ultimate Animated Animals / Ultimate Monsters / Easy Enemies -> coyote, cow, horse, snake, wyrm, golem
+  https://quaternius.itch.io  (Poly Pizza mirrors: https://poly.pizza/u/Quaternius)
+- Ultimate Guns, Fantasy Props, Ultimate Nature, Stylized Nature, Farm Buildings -> weapons, props
+Poly Pizza CC0 models (Quaternius): chicken https://poly.pizza/m/ineV9pU5VL, cow https://poly.pizza/m/26zM1outCr,
+  horse https://poly.pizza/m/D3hAeqeDBE, wolf/coyote https://poly.pizza/m/P1gU3Qkr9r
+Kenney (https://kenney.nl, CC0): Nature Kit, Survival Kit, Furniture Kit, Fantasy Town Kit, Graveyard Kit,
+  Pirate Kit, Castle Kit -> props.glb (trees, rocks, furniture, barrels, crates, tools)
+Barbed whip, fishing rod, cowboy hats, fan and accessories: built procedurally in js (no external assets).
