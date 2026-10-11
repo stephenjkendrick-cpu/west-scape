@@ -10,8 +10,10 @@ Quaternius (https://quaternius.com, CC0):
 - Ultimate Animated Animals / Ultimate Monsters / Easy Enemies -> coyote, cow, horse, snake, wyrm, golem
   https://quaternius.itch.io  (Poly Pizza mirrors: https://poly.pizza/u/Quaternius)
 - Ultimate Guns, Fantasy Props, Ultimate Nature, Stylized Nature, Farm Buildings -> weapons, props
-Poly Pizza CC0 models (Quaternius): chicken https://poly.pizza/m/ineV9pU5VL, cow https://poly.pizza/m/26zM1outCr,
+Poly Pizza CC0 models (Quaternius): cow https://poly.pizza/m/26zM1outCr,
   wolf/coyote https://poly.pizza/m/P1gU3Qkr9r
 Kenney (https://kenney.nl, CC0): Nature Kit, Survival Kit, Furniture Kit, Fantasy Town Kit, Graveyard Kit,
   Pirate Kit, Castle Kit -> props.glb (trees, rocks, furniture, barrels, crates, tools)
 Barbed whip, fishing rod, cowboy hats, fan and accessories: built procedurally in js (no external assets).
+Chicken: original CC0 low-poly rigged model built in Blender for West-Scape (model-src/blend/build_chicken.py).
+Cave golem: original CC0 low-poly rigged model built in Blender for West-Scape (model-src/blend/build_golem.py).
