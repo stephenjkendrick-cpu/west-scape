@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="icon-180.png" />
   <link rel="manifest" href="manifest.webmanifest" />
   <title>West-Scape</title>
-  <link rel="stylesheet" href="style.css?v=1791677711" />
+  <link rel="stylesheet" href="style.css?v=1791736303" />
 </head>
 <body>
   <div id="rotate-overlay"><div class="rot-phone" aria-hidden="true">▣</div><div class="rot-title">Turn your phone sideways</div><div class="rot-sub">West-Scape plays in landscape, like OSRS Mobile.<br>If it doesn't turn, switch off Portrait Orientation Lock in Control Center.</div></div>
@@ -19,13 +19,12 @@
     <canvas id="game-canvas"></canvas>
 
     <div id="hud-left">
-      <button type="button" id="hud-chat-toggle" class="hud-ico" title="Toggle chat" data-ui-ico="chat"><span class="hud-px"></span></button>
-      <button type="button" id="hud-logout" class="hud-ico" title="Logout" data-ui-ico="logout"><span class="hud-px"></span></button>
+      <button type="button" id="hud-chat-toggle" class="hud-ico" title="Hide / show chat" aria-label="Hide or show chat"><svg class="hud-svg" viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 6.5h22a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H15l-6.5 5.2V21H5a2 2 0 0 1-2-2V8.5a2 2 0 0 1 2-2z" stroke="#1a0f06" stroke-width="3.2"/><path d="M5 6.5h22a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H15l-6.5 5.2V21H5a2 2 0 0 1-2-2V8.5a2 2 0 0 1 2-2z" fill="#f1e2bb" stroke="#c9a24a" stroke-width="1.4"/><path d="M5.5 8.5h21" stroke="#fff8e4" stroke-width="1.2" stroke-opacity=".8"/><path d="M10.5 11.5l5.5 5 5.5-5" stroke="#6a3a1a" stroke-width="2.6"/></svg></button>
+      <button type="button" id="hud-logout" class="hud-ico" title="Logout" aria-label="Log out"><svg class="hud-svg" viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h13v22H4z" stroke="#1a0f06" stroke-width="3.2"/><path d="M5 6h5.6v20H5z" fill="#a9733b" stroke="#6a4020" stroke-width="1.2"/><path d="M10.6 6h5.6v20h-5.6z" fill="#8f5c2c" stroke="#6a4020" stroke-width="1.2"/><path d="M6.4 10h2.8M6.4 13.4h2.8M6.4 16.8h2.8M6.4 20.2h2.8M12 10h2.8M12 13.4h2.8M12 16.8h2.8M12 20.2h2.8" stroke="#4a2a12" stroke-width="1"/><path d="M15 16h13M23 10.5l5.5 5.5-5.5 5.5" stroke="#1a0f06" stroke-width="4.4"/><path d="M15 16h13M23 10.5l5.5 5.5-5.5 5.5" stroke="#f0c94a" stroke-width="2.4"/></svg></button>
     </div>
     <div id="hover-text"></div>
     <div id="boss-bar" hidden><div id="boss-name"></div><div id="boss-hp"><div id="boss-fill"></div><span id="boss-num"></span></div></div>
     <div id="toast"></div>
-    <div id="levelup-popup" hidden></div>
     <div id="world-map" hidden><div id="wm-title">World Map <button id="wm-close" class="small-btn">Close</button></div><canvas id="wm-canvas" width="384" height="384"></canvas></div>
 
     <!-- Minimap cluster (OSRS-style): orbs arc on the left, compass + XP button on top, world map bottom-right -->
@@ -116,6 +115,6 @@
     <!-- Loading -->
     <div id="loading">Loading West-Scape…</div>
   </div>
-  <script type="module" src="game.js?v=1791677711"></script>
+  <script type="module" src="game.js?v=1791736303"></script>
 </body>
 </html>
