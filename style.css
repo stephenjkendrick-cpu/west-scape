@@ -2151,3 +2151,42 @@ html, body {
   .char-confirm.code-box { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 95; width: min(340px, 90vw); box-sizing: border-box; }
 }
 #title-screen .char-card .title-btn.ghost { color: #3a2408; border-color: #5a3a10; background: rgba(255, 240, 200, 0.45); font-weight: bold; }
+
+/* ---- v12: inventory icons read clearly on the see-through panel (solid, bright, light rim) ---- */
+#game-root .inv-slot .px-icon.px-painted, #game-root .inv-slot .px-icon.px-canvas {
+  opacity: 1 !important; mix-blend-mode: normal !important;
+  height: 92% !important; width: auto !important; aspect-ratio: 1 / 1; max-width: 100% !important;
+  image-rendering: auto !important;
+  filter: brightness(1.22) contrast(1.1) saturate(1.1) drop-shadow(0 0 1px rgba(255, 238, 200, 0.7)) drop-shadow(0 1px 0 rgba(0, 0, 0, 0.9)) !important;
+}
+
+/* ---- v12: OSRS-style combat options tab ---- */
+#tab-combat { display: flex; flex-direction: column; gap: 4px; }
+#tab-combat .cb-head { display: flex; flex-direction: column; align-items: center; line-height: 1.15; }
+#tab-combat .cb-wname { color: #ffd700; font-weight: bold; font-size: 12px; text-shadow: 1px 1px 0 #000; display: flex; align-items: center; gap: 4px; }
+#tab-combat .cb-wname .px-icon { width: 16px !important; height: 16px !important; }
+#tab-combat .cb-lvl { color: #e8d8a8; font-size: 11px; text-shadow: 1px 1px 0 #000; }
+#tab-combat .cs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+#tab-combat .cs-btn { display: grid; grid-template-columns: 30px 1fr; grid-template-rows: auto auto; align-items: center; column-gap: 4px; min-height: 38px; padding: 3px 5px;
+  background: rgba(28, 18, 8, 0.78); border: 1px solid #5a3a1a; border-radius: 3px; color: #d8c08a; cursor: pointer; text-align: left; box-shadow: inset 0 0 0 1px rgba(255, 220, 140, 0.08); }
+#tab-combat .cs-btn .cs-ico { grid-row: 1 / span 2; width: 28px; height: 28px; }
+#tab-combat .cs-btn b { font-size: 12px; line-height: 1.1; align-self: end; }
+#tab-combat .cs-btn small { font-size: 9px; color: #9a8a68; line-height: 1.1; align-self: start; }
+#tab-combat .cs-btn.on { background: rgba(120, 82, 24, 0.92); border-color: #ffd36a; color: #fff2c0; box-shadow: inset 0 0 6px rgba(255, 215, 100, 0.55), 0 0 0 1px #ffd36a; }
+#tab-combat .cs-btn.on small { color: #f0dca0; }
+#tab-combat .cs-retal { display: flex; align-items: center; gap: 6px; width: 100%; min-height: 30px; padding: 2px 6px; background: rgba(28, 18, 8, 0.78); border: 1px solid #5a3a1a; border-radius: 3px; color: #d8c08a; cursor: pointer; font-size: 12px; }
+#tab-combat .cs-retal .cs-ico { width: 22px; height: 22px; }
+#tab-combat .cs-retal span { flex: 1; text-align: left; font-weight: bold; }
+#tab-combat .cs-retal em { font-style: normal; font-weight: bold; color: #ff9080; min-width: 24px; text-align: right; }
+#tab-combat .cs-retal.on { background: rgba(70, 90, 30, 0.88); border-color: #b8d870; color: #f4ffd8; }
+#tab-combat .cs-retal.on em { color: #b8ff80; }
+#tab-combat .cs-spec { display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto; gap: 1px 6px; width: 100%; padding: 3px 6px 4px; background: rgba(28, 18, 8, 0.78); border: 1px solid #5a3a1a; border-radius: 3px; color: #d8c08a; cursor: pointer; font-size: 11px; text-align: left; }
+#tab-combat .cs-spec .cs-spec-label { font-weight: bold; }
+#tab-combat .cs-spec .cs-spec-pct { color: #e8d8a8; font-size: 10px; }
+#tab-combat .cs-spec .cs-spec-bar { grid-column: 1 / span 2; position: relative; height: 9px; background: #1a1008; border: 1px solid #000; border-radius: 2px; overflow: hidden; }
+#tab-combat .cs-spec .cs-spec-bar i { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(#58d060, #2a8a34); }
+#tab-combat .cs-spec .cs-spec-bar u { position: absolute; top: 0; bottom: 0; width: 1px; background: #fff; opacity: .8; }
+#tab-combat .cs-spec.none { opacity: .6; cursor: default; }
+#tab-combat .cs-spec.none .cs-spec-bar i { background: linear-gradient(#8a8a8a, #5a5a5a); }
+#tab-combat .cs-spec.armed { border-color: #ffd36a; box-shadow: 0 0 6px rgba(255, 215, 100, 0.6); }
+#tab-combat .cs-spec.armed .cs-spec-bar i { background: linear-gradient(#ffd868, #d89a20); }
